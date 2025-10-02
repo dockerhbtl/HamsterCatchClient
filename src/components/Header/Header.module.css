@@ -1,0 +1,76 @@
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    background: #A4C4C133;
+    padding: 8px;
+    border-radius: 32px;
+}
+
+.name {
+    width: 30%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-family: Proxima Nova;
+}
+
+.name div {
+    margin-left: 4px;
+    color: #fff;
+    font-size: 12px;
+}
+
+.balance-wrapper {
+    border-radius: 32px;
+    border: 1px solid #FFF500;
+    display: flex;
+    color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.balance-wrapper img:nth-child(1) {
+    height: 24px;
+}
+
+.balance-wrapper div:nth-child(2) {
+    margin-left: 4px;
+    margin-right: 4px;
+    font-size: 12px;
+}
+
+.balance-wrapper img:nth-child(3) {
+    width: 16px;
+    height: 16px;
+}
+
+.balance div:nth-child(1) {
+    margin-right: 8px;
+}
+
+.balance img:nth-child(2) {
+    width: 25px;
+    height: 25px;
+}
+
+.balance svg {
+    margin-left: 2px;
+}
+
+.up-balance {
+    width: 30%;
+    display: flex;
+    justify-content: end;
+}
+
+.up-balance button {
+    color: #fff;
+    background: #8BAD1C;
+    border-radius: 32px;
+    width: 100px;
+    border: none;
+    font-family: Proxima Nova;
+    font-size: 12px;
+}

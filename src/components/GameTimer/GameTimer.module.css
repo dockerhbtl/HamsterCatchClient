@@ -1,0 +1,18 @@
+.timer {
+    font-size: 18px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-clock {
+    width: 100px;
+    height: 40px;
+    border: 1px solid #EBFF00;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 32px;
+}

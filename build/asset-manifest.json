@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.35031fdb.css",
+    "main.js": "/static/js/main.4217df88.js",
+    "static/js/206.5b079e3d.chunk.js": "/static/js/206.5b079e3d.chunk.js",
+    "static/media/ring-with-logo.png": "/static/media/ring-with-logo.3a289b1050d35446887f.png",
+    "static/media/ProximaNova-Light.ttf": "/static/media/ProximaNova-Light.4e6430d1b1cdd53aab1d.ttf",
+    "static/media/founded.mp3": "/static/media/founded.43638a99cf0aafe2b054.mp3",
+    "static/media/card.png": "/static/media/card.7a8634826a18c81eaff0.png",
+    "static/media/sbp.png": "/static/media/sbp.6cad30e1c703d8f0d48c.png",
+    "static/media/game-logo.png": "/static/media/game-logo.de02339b44adbe0e2df2.png",
+    "static/media/looser_red.png": "/static/media/looser_red.cb0fc3521649d9c75e6e.png",
+    "static/media/hamster_yellow_beaten.png": "/static/media/hamster_yellow_beaten.bd94dbd15f78c3d0ae1c.png",
+    "static/media/hamster_red_beaten.png": "/static/media/hamster_red_beaten.be8f91e0391353bc0578.png",
+    "static/media/yellow_hamster.png": "/static/media/yellow_hamster.66939da09cdd8c42ac56.png",
+    "static/media/red_hamster.png": "/static/media/red_hamster.7df7eb9136a740c2cd62.png",
+    "static/media/red_winner.png": "/static/media/red_winner.f0761c3aaf989b4b6931.png",
+    "static/media/green_winner.png": "/static/media/green_winner.0d4c01c643dcd30f26bc.png",
+    "static/media/hamster_red.png": "/static/media/hamster_red.13d309988122909a949c.png",
+    "static/media/looser_green.png": "/static/media/looser_green.2a9f42e110efeb7b52e1.png",
+    "static/media/count.mp3": "/static/media/count.5f7fb32cde1567f349d5.mp3",
+    "static/media/glove_left.png": "/static/media/glove_left.14aab51fe2d0571d9656.png",
+    "static/media/glove_right.png": "/static/media/glove_right.a410d8f1459cc6f367c6.png",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.35031fdb.css",
+    "static/js/main.4217df88.js"
+  ]
+}

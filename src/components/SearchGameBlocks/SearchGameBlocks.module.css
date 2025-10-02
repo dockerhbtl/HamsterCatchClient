@@ -1,0 +1,36 @@
+.title {
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 24px;
+}
+
+.blocks-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-size: 12px;
+}
+
+.blocks-wrapper div {
+    width: 47%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    border-radius: 16px;
+    color: #fff;
+    background-color: #2C2C2C;
+    text-align: center;
+}
+
+.cancel-search {
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(144deg, rgba(180, 12, 12, 1) 0%, rgba(185, 33, 33, 1) 33%, rgba(241, 78, 78, 1) 78%, rgba(254, 105, 105, 1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 8px;
+}

@@ -1,0 +1,59 @@
+.main-wrapper {
+    background: rgba(27, 28, 32, 1);
+    min-height: 100vh;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.go-back {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.go-back-wrapp {
+    display: flex;
+}
+
+.go-back-wrapp div {
+    margin-top: -2px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.controls-wrapper div {
+    color: #fff;
+    margin-bottom: 4px;
+    margin-top: 16px;
+}
+
+.controls-wrapper input {
+    width: 100%;
+    height: 60px;
+    border-radius: 16px;
+    outline: none;
+    border: none;
+    padding-left: 16px;
+    box-sizing: border-box;
+}
+
+.controls-wrapper button {
+    margin-top: 8px;
+    width: 100%;
+    height: 60px;
+    background: rgba(139, 173, 28, 1);
+    color: #fff;
+    border-radius: 16px;
+    border: none;
+}
+
+.content-wrapper {
+    width: 100%;
+}

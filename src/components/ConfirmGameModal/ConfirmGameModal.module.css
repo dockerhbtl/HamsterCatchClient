@@ -1,0 +1,69 @@
+.modal-wrapper :global .ant-modal-content {
+    background: #252525;
+    border-radius: 32px;
+}
+
+.modal-wrapper :global .ant-modal-content svg {
+    fill: #fff;
+}
+
+.main-wrapper {
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.name-wrapper {
+    display: flex;
+}
+
+.name {
+    margin-top: 9px;
+    font-weight: 700;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.hamsters-wrapper {
+    display: flex;
+}
+
+.hamster {
+    width: 100px;
+}
+
+.hamster img {
+    width: 42px;
+    margin-top: 8px;
+}
+
+.vs {
+    font-size: 24px;
+    font-weight: 700;
+    color: #EBFF00;
+}
+
+.confirm-btn button {
+    width: 250px;
+    height: 60px;
+    border: none;
+    border-radius: 16px;
+    background: #8BAD1C;
+    font-size: 16px;
+    color: #fff;
+    margin-top: 24px;
+}
+
+.timer-wrapper {
+    display: flex;
+}
+
+.timer {
+    margin-top: 8px;
+}

@@ -1,0 +1,9 @@
+.game-wrapper {
+    background-image: url('../../assets/images/ring-with-logo.png');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
