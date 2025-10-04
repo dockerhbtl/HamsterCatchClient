@@ -16,3 +16,10 @@
     align-items: center;
     border-radius: 32px;
 }
+
+.timer-new {
+    color:#fff;
+    font-size: 45px;
+    position: absolute;
+    margin-top: -80px;
+}
