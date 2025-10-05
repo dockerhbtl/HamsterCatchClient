@@ -98,16 +98,34 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
             : ''
 
         }
-        <div className={styles['title']}>Выберите номинал игры:</div>
         <div>
+            <div className={styles['blocks-wrapper']}>
+                <SearchBlock text='Тренировка' isLoading={isSearching === 0}
+                    clickCallback={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning' : '/traning')} disabled={isSearching !== null} />
+            </div>
             {freeGames > 0
                 ? <div className={styles['blocks-wrapper']}>
-                    <SearchBlock text='Играть' freeGames={freeGames} isLoading={isSearching === 0}
+                    <SearchBlock text='Online' additionalText={'free'} isLoading={isSearching === 0}
                         clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
                 </div>
                 : ''
             }
+
             <div className={styles['blocks-wrapper']}>
+                <SearchBlock text='Online' additionalText={100} isLoading={isSearching === 0}
+                    clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
+            </div>
+            <div className={styles['blocks-wrapper']}>
+                <SearchBlock text='Online' additionalText={500} isLoading={isSearching === 0}
+                    clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
+            </div>
+
+        </div>
+    </div>
+}
+
+/*
+ <div className={styles['blocks-wrapper']}>
                 <SearchBlock text='100 C' isLoading={isSearching === 100}
                     clickCallback={() => handleSearch(100)} disabled={isSearching !== null} />
                 <SearchBlock text='500 C' isLoading={isSearching === 500}
@@ -125,9 +143,7 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
                 <SearchBlock text='10000 C' isLoading={isSearching === 10000}
                     clickCallback={() => handleSearch(10000)} disabled={isSearching !== null} />
             </div>
-        </div>
-    </div>
-}
+*/
 
 /*
             <Modal title="Игра готова" open={gameData.isGameCreated} onCancel={handleCancelGame} footer={[]}

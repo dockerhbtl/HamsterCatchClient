@@ -18,6 +18,8 @@ import { UpBalancePage } from "../pages/UpBalancePage/UpBalancePage";
 import { WithdrawPage } from "../pages/WithdtawPage/WithdrawPage";
 import { FeedbackForm } from "../components/FeedbackForm/FeedbackForm";
 import { toast } from "react-toastify";
+import { HamsterKiller } from "../components/HamsterKiller/HamsterKiller";
+import { TraningResultPage } from "../pages/TraningResultPage/TraningResultPage";
 
 
 export const Router = () => {
@@ -107,6 +109,14 @@ export const Router = () => {
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE : '/',
             element: <MainPage socket={socket} />,
+        },
+        {
+            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning' : '/traning',
+            element: <HamsterKiller />,
+        },
+        {
+            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning-result' : '/traning-result',
+            element: <TraningResultPage />
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + "/game" : '/game',

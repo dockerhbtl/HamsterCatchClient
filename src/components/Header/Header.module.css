@@ -74,3 +74,14 @@
     font-family: Proxima Nova;
     font-size: 12px;
 }
+
+.balanceNew {
+    font-size: 12px;
+    display: flex;
+
+}
+.balanceNew img {
+    height: 16px !important;
+    margin-left: 6px;
+    margin-top: -2px;
+}

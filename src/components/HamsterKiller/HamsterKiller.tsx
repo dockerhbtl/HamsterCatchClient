@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 import { GameTimerNew } from '../GameTimer/GameTimerNew';
 //@ts-ignore
 import hitSound from '../../assets/sounds/yes1.wav';
+import { useAppDispatch } from '../../hooks/redux';
+import { setNewGameResult } from '../../store/reducers/GameSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const HamsterKiller = () => {
     const [showHammer, setShowHammer] = useState(false);
@@ -13,6 +16,16 @@ export const HamsterKiller = () => {
     const [hamsterAppearTime, setHamsterAppearTime] = useState(0);
     const [results, setResults] = useState<number[]>([]);
     const [clickedId, setClickedId] = useState(-1);
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (scores === 10) {
+            dispatch(setNewGameResult(results))
+            navigate('/traning-result');
+        }
+    }, [scores])
 
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 

@@ -59,11 +59,26 @@ function App() {
     //const isAcceptedPlatform = platform === 'android' || platform === 'ios' || platform === 'android_x';
     const isAcceptedPlatform = true;
 
-    const [gameStarted, setGmaeStarted] = useState(false);
     return <div>
-        {
-            gameStarted ? <HamsterKiller /> : <button onClick={() => setGmaeStarted(true)}>startgame</button>
-        }
+        <div>
+            {isAcceptedPlatform
+                ? <div>
+                    {appLoaded
+                        ? <div>
+                            {token
+                                ? <Router />
+                                : defineErrorComponent()
+
+                            }
+                        </div>
+                        : <>
+                            <Loader />
+                        </>
+                    }
+                </div>
+                : <WrongPlatform level={2} />
+            }
+        </div>
         <ToastContainer />
     </div>
 }
@@ -94,25 +109,3 @@ export const AppWrapper = () => {
         }
     </div>
 }
-
-/*
-        <div>
-            {isAcceptedPlatform
-                ? <div>
-                    {appLoaded
-                        ? <div>
-                            {token
-                                ? <Router />
-                                : defineErrorComponent()
-
-                            }
-                        </div>
-                        : <>
-                            <Loader />
-                        </>
-                    }
-                </div>
-                : <WrongPlatform level={2} />
-            }
-        </div>
-*/

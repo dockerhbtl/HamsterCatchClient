@@ -8,8 +8,8 @@ export const injectStore = (_store: any) => {
 
 export const createAxiosInstance = () => {
     const instance = axios.create({
-        // baseURL: 'http://localhost:5000/api/',
-        baseURL: 'https://web-app-telegramm-backend.ru/api/',
+        baseURL: 'http://localhost:5000/api/',
+        //baseURL: 'https://web-app-telegramm-backend.ru/api/',
         // baseURL: 'https://hamster-battle-app.pro/api/',
         headers: {
             'Content-Type': 'application/json',

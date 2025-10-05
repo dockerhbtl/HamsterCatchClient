@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface GameState {
     isSearching: null | number;
@@ -19,6 +19,9 @@ export interface GameState {
         results: {
             [key: string]: number
         }
+    };
+    newGameResult: {
+        taps: number[]
     }
 }
 
@@ -34,6 +37,9 @@ const initialState: GameState = {
     gameResult: {
         winner: '',
         results: {}
+    },
+    newGameResult: {
+        taps: []
     }
 };
 
@@ -77,6 +83,9 @@ export const gameSlice = createSlice({
                 winner: action.payload.winner,
                 results: taps
             }
+        },
+        setNewGameResult: (state, action) => {
+            state.newGameResult.taps = action.payload
         }
     }
 });
@@ -87,7 +96,8 @@ export const {
     setGameProcess,
     resetGameDataToInitialValues,
     setGameId,
-    setGameResults
+    setGameResults,
+    setNewGameResult
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

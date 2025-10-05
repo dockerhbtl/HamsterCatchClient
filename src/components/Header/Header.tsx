@@ -4,6 +4,7 @@ import { Dropdown } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import ava from '../../assets/images/avatar.png';
 import money from '../../assets/images/money.png';
+import moneyNew from '../../assets/images/moneyNew.png';
 import dropdown from '../../assets/images/dropdown.png'
 import { MAIN_PAGE_ROUTE } from "../../consts/AppConsts";
 
@@ -13,10 +14,18 @@ export const Header = () => {
     const items = [
         {
             key: '1',
-            label: ( ""
-                // <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw'} >
-                //     Вывести средства
-                // </Link>
+            label: (
+                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw'} >
+                    Мой профиль
+                </Link>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw'} >
+                    Таблица рейтинга
+                </Link>
             ),
         }
     ];
@@ -30,10 +39,10 @@ export const Header = () => {
         <Dropdown menu={{ items }} placement="bottom" arrow trigger={['click']}>
             <div className={styles['balance-wrapper']}>
                 {String(balance).length <= 5 ?
-                    ""//<img src={money} alt="money" />
+                    ''//<img src={money} alt="money" />
                     : <div></div>
                 }
-                <div>{balance} C</div>
+                <div className={styles.balanceNew}>{balance} <img src={moneyNew} alt="money" /></div>
                 <img src={dropdown} alt="dropdown" />
             </div>
         </Dropdown>

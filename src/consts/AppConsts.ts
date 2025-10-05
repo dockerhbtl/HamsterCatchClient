@@ -22,4 +22,4 @@ export const errorCodes = {
     userAlreadyExist: 'THIS_USERNAME_ALREADY_EXISTS'
 }
 
-export const MAIN_PAGE_ROUTE = '/hb-client/';
+export const MAIN_PAGE_ROUTE = undefined;
