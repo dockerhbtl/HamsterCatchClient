@@ -6,11 +6,13 @@ import { SearchGameBlocks } from "../../components/SearchGameBlocks/SearchGameBl
 import { MessageOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { MAIN_PAGE_ROUTE } from '../../consts/AppConsts';
+import { AppPreloader } from '../../components/BeforeGame/AppPreloader';
 
-export const MainPage = ({ socket }: { socket: WebSocket, }) => {
+export const MainPage = ({ socket, createSocketAndStartSearch }: { socket: WebSocket, createSocketAndStartSearch: (id: string, sum: number) => void }) => {
     const navigate = useNavigate();
 
     return <div className={styles['main-wrapper']}>
+        <AppPreloader />
         <Header />
         <div className={styles['title-wrapper']}>
             <div>Скорее в бой!</div>
@@ -20,7 +22,7 @@ export const MainPage = ({ socket }: { socket: WebSocket, }) => {
             <img src={logo} alt="New logo" />
         </div>
         <div>
-            <SearchGameBlocks socket={socket} />
+            <SearchGameBlocks socket={socket} createSocketAndStartSearch={createSocketAndStartSearch} />
         </div>
         <div className={styles['help-btn']} onClick={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/help' : '/help')}>
             <div>24/7</div>

@@ -3,14 +3,14 @@ import { AppConsts, MAIN_PAGE_ROUTE } from "../../consts/AppConsts";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import styles from './GamePage.module.css';
 import { useNavigate } from "react-router-dom";
-import { GameTimer } from "../../components/GameTimer/GameTimer";
-import { GamePlay } from "../../components/GamePlay/GamePlay";
 import { disbleMole, resetGameDataToInitialValues } from "../../store/reducers/GameSlice";
 import { GameTimerNew } from "../../components/GameTimer/GameTimerNew";
 import hamsterImage from '../../assets/images/hamster-game.png';
 import timerImage from '../../assets/images/timer.png';
 //@ts-ignore
 import hitSound from '../../assets/sounds/yes1.wav';
+//@ts-ignore
+import errorSound from '../../assets/sounds/error-sound.mp3';
 
 
 export const GamePage = ({ socket }: { socket: WebSocket }) => {
@@ -24,6 +24,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
     const [showHammer, setShowHammer] = useState(false);
     const [results, setResults] = useState<number[]>([]);
     const [clickedId, setClickedId] = useState(-1);
+    const [backStyle, setBackStyle] = useState('');
 
     const id = useAppSelector(state => state.authSlice.id);
     const gameData = useAppSelector(state => state.gameSlice.gameData);
@@ -32,7 +33,32 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
         if (gameData.position !== -1) {
             setHamsterAppearTime(performance.now());
         }
-    }, [gameData.position])
+    }, [gameData.position]);
+
+    const defineSuccessTapper = (tappedId: number) => {
+        console.log('tappedID', tappedId);
+        console.log('id', id);
+
+
+        const audio = new Audio(errorSound);
+        if (tappedId === Number(id)) {
+            setBackStyle('linear-gradient(135deg, #d0c5c5 0%, #ace8a0 100%)')
+        } else {
+            setBackStyle('linear-gradient(135deg, #d0c5c5 0%, #ef8a8aff 100%)')
+            audio.volume = 0.5;
+            audio.play();
+        }
+        setTimeout(() => {
+            setBackStyle('');
+            audio.pause();
+        }, 500)
+    }
+
+    useEffect(() => {
+        if (gameData.tappedId) {
+            defineSuccessTapper(Number(gameData.tappedId))
+        }
+    }, [gameData.tappedId])
 
 
 
@@ -50,7 +76,6 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
         const audio = new Audio(hitSound);
         audio.volume = 0.5;
         audio.play();
-        const delay = (Math.floor(Math.random() * 4) + 2) * 1000;
         setShowHammer(true);
         setClickedId(id);
         sendMessageToServer(reaction);
@@ -111,7 +136,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
     console.log('gameData', gameData);
 
 
-    return <div className={styles.background} style={showHammer ? { background: 'linear-gradient(135deg, #d0c5c5 0%, #ace8a0 100%)' } : {}}>
+    return <div className={styles.background} style={backStyle ? { background: backStyle } : {}}>
         <div>
             <GameTimerNew />
         </div>

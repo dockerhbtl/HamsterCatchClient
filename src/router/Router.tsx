@@ -30,7 +30,7 @@ export const Router = () => {
     const dispatch = useAppDispatch();
 
     const { token } = useAppSelector(state => state.tokenSlice);
-    //const dataGameSlice = useAppSelector(state => state.gameSlice)
+
 
 
     useEffect(() => {
@@ -40,87 +40,82 @@ export const Router = () => {
     }, []);
 
 
-    useEffect(() => {
-        if (socket) {
-            socket.onopen = function () {
-                // socket.send();
-            };
-            socket.onclose = function () {
-                window.location.reload();
-            };
-            socket.onerror = function (error: any) {
-                console.error('Ошибка веб-сокета:', error);
-                window.location.reload();
-            };
-            socket.onmessage = function (event: { data: string }) {
-                const data = JSON.parse(event.data);
-                console.log('data', data);
+    const createSocketAndStartSearch = (id: string, sum: number) => {
+        const createdSocket = new WebSocket("ws://localhost:5000");
+        createdSocket.onopen = function () {
+            createdSocket.send(JSON.stringify({
+                name: id,
+                method: AppConsts.NEW_GAME,
+                sumToPlay: sum
+            }))
+        };
+        createdSocket.onclose = function () {
+            window.location.reload();
+        };
+        createdSocket.onerror = function (error: any) {
+            console.error('Ошибка веб-сокета:', error);
+            window.location.reload();
+        };
+        createdSocket.onmessage = function (event: { data: string }) {
+            const data = JSON.parse(event.data);
+            console.log('data', data);
 
-                switch (data.status) {
-                    case AppConsts.FINDING:
-                        dispatch(setGameId(data.gameId))
-                        break;
-                    case AppConsts.GAME_CREATED:
-                        dispatch(setIsGameCreated({
-                            isGameCreated: true,
+            switch (data.status) {
+                case AppConsts.FINDING:
+                    dispatch(setGameId(data.gameId))
+                    break;
+                case AppConsts.GAME_CREATED:
+                    dispatch(setIsGameCreated({
+                        isGameCreated: true,
+                        gameId: data.gameId,
+                        playersData: data.players,
+                        isPlayersReady: false
+                    }))
+
+                    break;
+                case AppConsts.PLAYERS_READY:
+                    if (data.tappedId) {
+                        dispatch(setTappedId(data))
+                    } else {
+                        dispatch(setGameProcess({
                             gameId: data.gameId,
                             playersData: data.players,
-                            isPlayersReady: false
+                            position: data.position,
+                            isPlayersReady: true
                         }))
+                    }
+                    break
+                case AppConsts.GAME_CANCEL:
+                    dispatch(resetGameDataToInitialValues())
+                    break;
+                case AppConsts.END_GAME:
+                    dispatch(setGameResults(data))
+                    break;
+                case AppConsts.BALANCE_IS_NOT_ENOUGH:
+                    toast.error(data.message, {
+                        style: {
+                            marginTop: '16px'
+                        },
+                        autoClose: 2000
+                    })
+                    dispatch(resetGameDataToInitialValues())
+                    break;
+                case AppConsts.SERVER_IS_OVERLOADED:
+                    dispatch(resetGameDataToInitialValues())
+                    toast.error('Сервер перегружен попробуйте позже')
+                    break;
+                default:
+                    break;
+            }
+        };
+        setSocket(createdSocket)
+    }
 
-                        break;
-                    case AppConsts.PLAYERS_READY:
-                        if (data.tappedId) {
-                            dispatch(setTappedId(data))
-                        } else {
-                            dispatch(setGameProcess({
-                                gameId: data.gameId,
-                                playersData: data.players,
-                                position: data.position,
-                                isPlayersReady: true
-                            }))
-                        }
-                        break
-                    case AppConsts.GAME_CANCEL:
-                        dispatch(resetGameDataToInitialValues())
-                        break;
-                    case AppConsts.END_GAME:
-                        dispatch(setGameResults(data))
-                        break;
-                    case AppConsts.BALANCE_IS_NOT_ENOUGH:
-                        toast.error(data.message, {
-                            style: {
-                                marginTop: '16px'
-                            },
-                            autoClose: 2000
-                        })
-                        dispatch(resetGameDataToInitialValues())
-                        break;
-                    case AppConsts.SERVER_IS_OVERLOADED:
-                        dispatch(resetGameDataToInitialValues())
-                        toast.error('Сервер перегружен попробуйте позже')
-                        break;
-                    default:
-                        break;
-                }
-            };
-        } else {
-            // setSocket(new WebSocket("wss://hamster-battle-app.pro"))
-            //setSocket(new WebSocket("wss://web-app-telegramm-backend.ru"))
-            setSocket(new WebSocket("ws://localhost:5000"))
-        }
-
-
-    }, [socket]);
-
-    // const createSocket = () => {
-    //     setSocket(new WebSocket("ws://localhost:5000"))
-    // }
 
     const router = createBrowserRouter([
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE : '/',
-            element: <MainPage socket={socket} />,
+            element: <MainPage socket={socket} createSocketAndStartSearch={createSocketAndStartSearch} />,
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning' : '/traning',
@@ -151,7 +146,7 @@ export const Router = () => {
             element: <FeedbackForm text={'Сообщите нам о проблеме и мы обязательно с вами свяжемся'} withGoBack={true} />
         }
     ]);
-    return (appLoaded && socket) ? <div>
+    return (appLoaded) ? <div>
         <RouterProvider router={router} />
     </div> : <Loader />;
 }

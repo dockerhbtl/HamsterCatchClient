@@ -4,18 +4,19 @@ import { SearchBlock } from './SearchBlock';
 import styles from './SearchGameBlocks.module.css';
 import { AppConsts, GAME_TIME, MAIN_PAGE_ROUTE } from '../../consts/AppConsts';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SearchGameModal } from "../SearchGameModal/SearchGameModal";
 import { ConfirmGameModal } from "../ConfirmGameModal/ConfirmGameModal";
+import { BeforeGame } from '../BeforeGame/BeforeGame';
 
 
-export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
+export const SearchGameBlocks = ({ socket, createSocketAndStartSearch }: { socket: WebSocket, createSocketAndStartSearch: any }) => {
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
 
     const isSearching = useAppSelector(state => state.gameSlice.isSearching);
-    const { id, username } = useAppSelector(state => state.authSlice);
+    const { id } = useAppSelector(state => state.authSlice);
     const gameData = useAppSelector(state => state.gameSlice.gameData);
 
 
@@ -43,7 +44,8 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
     useEffect(() => {
 
         if (gameData.isPlayersReady) {
-            navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/game' : '/game')
+            handleStartGame();
+            // navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/game' : '/game')
         }
 
     }, [gameData.isPlayersReady]
@@ -52,21 +54,15 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
 
     const handleSearch = (sum: number) => {
         dispatch(setIsSearching(sum));
-        socket.send(JSON.stringify({
-            name: id,
-            method: AppConsts.NEW_GAME,
-            sumToPlay: sum
-        }))
+        createSocketAndStartSearch(id, sum);
     }
 
     const handleReadyToPlay = () => {
-        //console.log('gameData', gameData);
         socket.send(JSON.stringify({
             name: id,
             method: AppConsts.PROCESS,
             ready: 1,
             id: gameData.gameId,
-            // time: GAME_TIME
         }))
     }
 
@@ -87,42 +83,59 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
 
     }
 
+    const [showTraningEffect, setShowTranningEffect] = useState(false);
+    const [showBeforeGameEffect, setShowBeforeGameEffect] = useState(false);
 
-    return <div className={styles['main-wrapper']}>
-        {(isSearching !== null && !gameData.isGameCreated)
-            ? <SearchGameModal handleStopSearching={handleStopSearching} />
-            : ''
 
+    const handleStartTraning = () => {
+        setShowTranningEffect(true);
+    }
+
+    const handleStartGame = () => {
+        dispatch(setIsSearching(null));
+        setShowBeforeGameEffect(true)
+    }
+
+
+    return <>
+        {showTraningEffect &&
+            <BeforeGame route='/traning' />
         }
-        {gameData.isGameCreated
-            ? <ConfirmGameModal handleCancelGame={handleCancelGame} gameData={gameData}
-                handleReadyToPlay={handleReadyToPlay} />
-            : ''
-
+        {showBeforeGameEffect &&
+            <BeforeGame route='/game' />
         }
-        <div>
-            <div className={styles['blocks-wrapper']}>
-                <SearchBlock text='Тренировка' isLoading={isSearching === 0}
-                    clickCallback={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning' : '/traning')} disabled={isSearching !== null} />
-            </div>
-            ? <div className={styles['blocks-wrapper']}>
-                <SearchBlock text='Online' additionalText={'free'} isLoading={isSearching === 0}
-                    clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
-            </div>
-            : ''
+        <div className={styles['main-wrapper']}>
+            {(isSearching !== null && !gameData.isGameCreated)
+                ? <SearchGameModal handleStopSearching={handleStopSearching} />
+                : ''
 
+            }
+            {gameData.isGameCreated
+                ? <ConfirmGameModal handleCancelGame={handleCancelGame} gameData={gameData}
+                    handleReadyToPlay={handleReadyToPlay} />
+                : ''
 
-            <div className={styles['blocks-wrapper']}>
-                <SearchBlock text='Online' additionalText={100} isLoading={isSearching === 0}
-                    clickCallback={() => handleSearch(100)} disabled={isSearching !== null} />
-            </div>
-            <div className={styles['blocks-wrapper']}>
-                <SearchBlock text='Online' additionalText={500} isLoading={isSearching === 0}
-                    clickCallback={() => handleSearch(500)} disabled={isSearching !== null} />
-            </div>
+            }
+            <div>
+                <div className={styles['blocks-wrapper']}>
+                    <SearchBlock text='Тренировка' isLoading={isSearching === 0}
+                        clickCallback={handleStartTraning} disabled={isSearching !== null} />
+                </div>
+                <div className={styles['blocks-wrapper']}>
+                    <SearchBlock text='Online' additionalText={'free'} isLoading={isSearching === 0}
+                        clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
+                </div>
+                <div className={styles['blocks-wrapper']}>
+                    <SearchBlock text='Online' additionalText={100} isLoading={isSearching === 100}
+                        clickCallback={() => handleSearch(100)} disabled={isSearching !== null} />
+                </div>
+                <div className={styles['blocks-wrapper']}>
+                    <SearchBlock text='Online' additionalText={500} isLoading={isSearching === 500}
+                        clickCallback={() => handleSearch(500)} disabled={isSearching !== null} />
+                </div>
 
-        </div>
-    </div>
+            </div>
+        </div></>
 }
 
 /*

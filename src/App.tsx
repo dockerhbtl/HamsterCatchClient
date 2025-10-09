@@ -92,25 +92,5 @@ export default App;
 
 
 export const AppWrapper = () => {
-    const [AlD, sAlD] = useState(false);
-
-    const dD = () => {
-        if (navigator.maxTouchPoints > 2 && navigator.maxTouchPoints < 15) {
-            sAlD(true);
-        } else {
-            sAlD(true);
-        }
-    }
-
-    useEffect(() => {
-        dD()
-    }, []);
-
-
-    return <div>
-        {AlD
-            ? <App />
-            : <WrongPlatform level={1} />
-        }
-    </div>
+    return <App />
 }

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppDispatch } from "../store";
 import { authApi } from "../../api/api";
+import { toast } from "react-toastify";
 
 export interface AuthState {
     id: number;
@@ -26,13 +27,10 @@ export const authSlice = createSlice({
             state.balance = action.payload.balance;
             state.rating = action.payload.rating;
         },
-        setValidCode: (state) => {
-            //state.isValidCode = true;
-        }
     }
 });
 
-export const { setAuthData, setValidCode } = authSlice.actions;
+export const { setAuthData } = authSlice.actions;
 
 export default authSlice.reducer;
 
@@ -40,7 +38,6 @@ export function getMyUsername() {
     return async (dispatch: AppDispatch) => {
         try {
             const response = await authApi.getMyData();
-            //await new Promise(resolve => setTimeout(resolve, 2000)); //ждет ответ с сервера 
             dispatch(setAuthData({
                 id: response.data.id,
                 username: response.data.username,
@@ -48,31 +45,12 @@ export function getMyUsername() {
                 rating: response.data.rating
             }));
         } catch (e) {
-            console.log(e);
-        }
-    };
-}
-
-export function checkUserCode(token: string, code: string) {
-    return async (dispatch: AppDispatch) => {
-        try {
-            await new Promise(resolve => setTimeout(resolve, 2000)); //ждет ответ с сервера
-            if (code === 'matvey') {
-                dispatch(setValidCode());
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    };
-}
-
-export function createUserCode(token: string, code: string) {
-    return async (dispatch: AppDispatch) => {
-        try {
-            await new Promise(resolve => setTimeout(resolve, 2000)); //ждет ответ с сервера
-            dispatch(setValidCode());
-        } catch (e) {
-            console.log(e);
+            toast.error('Ошибка авторизации', {
+                style: {
+                    marginTop: '16px'
+                },
+                autoClose: 2000
+            })
         }
     };
 }
