@@ -18,7 +18,7 @@ import { UpBalancePage } from "../pages/UpBalancePage/UpBalancePage";
 import { WithdrawPage } from "../pages/WithdtawPage/WithdrawPage";
 import { FeedbackForm } from "../components/FeedbackForm/FeedbackForm";
 import { toast } from "react-toastify";
-import { HamsterKiller } from "../components/HamsterKiller/HamsterKiller";
+import { HamsterKillerTraning } from "../components/HamsterKiller/HamsterKillerTraning";
 import { TraningResultPage } from "../pages/TraningResultPage/TraningResultPage";
 
 
@@ -67,11 +67,18 @@ export const Router = () => {
 
                         break;
                     case AppConsts.PLAYERS_READY:
-                        dispatch(setGameProcess({
-                            gameId: data.gameId,
-                            playersData: data.players,
-                            isPlayersReady: true
-                        }))
+                        if (data.tappedId) {
+                            dispatch(setGameProcess({
+                                reactionTime: data.reactionTime,
+                            }))
+                        } else {
+                            dispatch(setGameProcess({
+                                gameId: data.gameId,
+                                playersData: data.players,
+                                position: 1,
+                                isPlayersReady: true
+                            }))
+                        }
                         break
                     case AppConsts.GAME_CANCEL:
                         dispatch(resetGameDataToInitialValues())
@@ -98,12 +105,16 @@ export const Router = () => {
             };
         } else {
             // setSocket(new WebSocket("wss://hamster-battle-app.pro"))
-            setSocket(new WebSocket("wss://web-app-telegramm-backend.ru"))
-            // setSocket(new WebSocket("ws://localhost:5000"))
+            //setSocket(new WebSocket("wss://web-app-telegramm-backend.ru"))
+            setSocket(new WebSocket("ws://localhost:5000"))
         }
 
 
     }, [socket]);
+
+    // const createSocket = () => {
+    //     setSocket(new WebSocket("ws://localhost:5000"))
+    // }
 
     const router = createBrowserRouter([
         {
@@ -112,7 +123,7 @@ export const Router = () => {
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning' : '/traning',
-            element: <HamsterKiller />,
+            element: <HamsterKillerTraning />,
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning-result' : '/traning-result',

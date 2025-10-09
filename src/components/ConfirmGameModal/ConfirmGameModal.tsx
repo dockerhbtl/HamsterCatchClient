@@ -1,13 +1,13 @@
-import {Modal} from "antd";
+import { Modal } from "antd";
 import yellowHamster from '../../assets/images/yellow_hamster.png';
 import redHamster from '../../assets/images/red_hamster.png';
 import styles from './ConfirmGameModal.module.css';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 //@ts-ignore
 import sound from "../../assets/sounds/founded.mp3";
-import {Watch} from "react-loader-spinner";
+import { Watch } from "react-loader-spinner";
 
-export const ConfirmGameModal = ({handleCancelGame, gameData, handleReadyToPlay}: {
+export const ConfirmGameModal = ({ handleCancelGame, gameData, handleReadyToPlay }: {
     handleCancelGame: () => void,
     gameData: any,
     handleReadyToPlay: () => void
@@ -37,9 +37,12 @@ export const ConfirmGameModal = ({handleCancelGame, gameData, handleReadyToPlay}
         };
     }, [count]);
 
+    console.log('gameData.playersData', gameData.playersData);
+
+
     return <Modal open={true} className={styles['modal-wrapper']} onCancel={handleCancelGame}
-                  footer={[]}
-                  width={'90%'}>
+        footer={[]}
+        width={'90%'}>
         <div className={styles['main-wrapper']}>
             <div className={styles['timer-wrapper']}><Watch
                 visible={true}
@@ -56,19 +59,19 @@ export const ConfirmGameModal = ({handleCancelGame, gameData, handleReadyToPlay}
             <div>Игра готова!</div>
             <div className={styles['name-wrapper']}>
                 <div className={styles['name']}>
-                    {gameData.playersData[0].telegram}
+                    {gameData.playersData[0].username}
                 </div>
                 <div className={styles['vs']}>VS</div>
                 <div className={styles['name']}>
-                    {gameData.playersData[1].telegram}
+                    {gameData.playersData[1].username}
                 </div>
             </div>
             <div className={styles['hamsters-wrapper']}>
-                <div className={styles['hamster']} style={gameData.playersData[0].ready ? {background: '#A2C825'} : {}}>
-                    <img src={yellowHamster} alt="first player"/>
+                <div className={styles['hamster']} style={gameData.playersData[0].ready ? { background: '#A2C825' } : {}}>
+                    <img src={yellowHamster} alt="first player" />
                 </div>
-                <div className={styles['hamster']} style={gameData.playersData[1].ready ? {background: '#A2C825'} : {}}>
-                    <img src={redHamster} alt="second player"/>
+                <div className={styles['hamster']} style={gameData.playersData[1].ready ? { background: '#A2C825' } : {}}>
+                    <img src={redHamster} alt="second player" />
                 </div>
             </div>
             <div className={styles['confirm-btn']}>

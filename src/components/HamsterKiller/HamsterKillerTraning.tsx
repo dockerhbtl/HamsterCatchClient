@@ -9,7 +9,7 @@ import { useAppDispatch } from '../../hooks/redux';
 import { setNewGameResult } from '../../store/reducers/GameSlice';
 import { useNavigate } from 'react-router-dom';
 
-export const HamsterKiller = () => {
+export const HamsterKillerTraning = () => {
     const [showHammer, setShowHammer] = useState(false);
     const [hamsterId, setHamsterId] = useState<null | number>(null);
     const [scores, setScores] = useState(0);

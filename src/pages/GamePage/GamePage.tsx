@@ -25,7 +25,8 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
             name: username,
             method: AppConsts.PROCESS,
             tap: 1,
-            id: gameData.gameId
+            id: gameData.gameId,
+            reactionTime: 100
         }))
     }
 
@@ -51,11 +52,12 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
 
 
     return <div className={styles['game-wrapper']}>
-        <div>
+        Game page
+        {/* <div>
             <GameTimer setDisabledGame={setDisabledGame} gameData={gameData} endGame={handleEndGame} />
         </div>
         <div>
             <GamePlay gameData={gameData} handleTapHamster={handleTapHamster} isDisbledGame={isDisbledGame} />
-        </div>
+        </div> */}
     </div>
 }

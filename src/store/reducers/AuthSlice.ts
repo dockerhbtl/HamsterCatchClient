@@ -1,19 +1,19 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {AppDispatch} from "../store";
-import {authApi} from "../../api/api";
+import { createSlice } from "@reduxjs/toolkit";
+import { AppDispatch } from "../store";
+import { authApi } from "../../api/api";
 
 export interface AuthState {
-    balance: number;
+    id: number;
     username: string;
-    freeGames: number;
-    isValidCode: boolean;
+    balance: number;
+    rating: number;
 }
 
 const initialState: AuthState = {
-    balance: 0,
+    id: 0,
     username: '',
-    freeGames: 0,
-    isValidCode: false
+    balance: 0,
+    rating: 0
 };
 
 export const authSlice = createSlice({
@@ -21,17 +21,18 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         setAuthData: (state, action) => {
+            state.id = action.payload.id;
             state.username = action.payload.username;
             state.balance = action.payload.balance;
-            state.freeGames = action.payload.freeGames;
+            state.rating = action.payload.rating;
         },
         setValidCode: (state) => {
-            state.isValidCode = true;
+            //state.isValidCode = true;
         }
     }
 });
 
-export const {setAuthData, setValidCode} = authSlice.actions;
+export const { setAuthData, setValidCode } = authSlice.actions;
 
 export default authSlice.reducer;
 
@@ -41,9 +42,10 @@ export function getMyUsername() {
             const response = await authApi.getMyData();
             //await new Promise(resolve => setTimeout(resolve, 2000)); //ждет ответ с сервера 
             dispatch(setAuthData({
-                username: response.data.telegram,
+                id: response.data.id,
+                username: response.data.username,
                 balance: Number(response.data.balance),
-                freeGames: response.data.free_games
+                rating: response.data.rating
             }));
         } catch (e) {
             console.log(e);

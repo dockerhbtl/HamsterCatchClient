@@ -7,7 +7,7 @@ import { MessageOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { MAIN_PAGE_ROUTE } from '../../consts/AppConsts';
 
-export const MainPage = ({ socket }: { socket: WebSocket }) => {
+export const MainPage = ({ socket }: { socket: WebSocket, }) => {
     const navigate = useNavigate();
 
     return <div className={styles['main-wrapper']}>

@@ -15,8 +15,11 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
     const dispatch = useAppDispatch();
 
     const isSearching = useAppSelector(state => state.gameSlice.isSearching);
-    const { username, freeGames } = useAppSelector(state => state.authSlice);
+    const { id, username } = useAppSelector(state => state.authSlice);
     const gameData = useAppSelector(state => state.gameSlice.gameData);
+
+    console.log('isSearching', isSearching);
+
 
     function raisePrioirity(gameId: any) {
         socket.send(JSON.stringify({
@@ -41,7 +44,7 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
     useEffect(() => {
 
         if (gameData.isPlayersReady) {
-            navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/game' : '/game')
+            // navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/game' : '/game')
         }
 
     }, [gameData.isPlayersReady]
@@ -51,7 +54,7 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
     const handleSearch = (sum: number) => {
         dispatch(setIsSearching(sum));
         socket.send(JSON.stringify({
-            name: username,
+            name: id,
             method: AppConsts.NEW_GAME,
             sumToPlay: sum
         }))
@@ -60,11 +63,11 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
     const handleReadyToPlay = () => {
         //console.log('gameData', gameData);
         socket.send(JSON.stringify({
-            name: username,
+            name: id,
             method: AppConsts.PROCESS,
             ready: 1,
             id: gameData.gameId,
-            time: GAME_TIME
+            // time: GAME_TIME
         }))
     }
 
@@ -103,21 +106,20 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
                 <SearchBlock text='Тренировка' isLoading={isSearching === 0}
                     clickCallback={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/traning' : '/traning')} disabled={isSearching !== null} />
             </div>
-            {freeGames > 0
-                ? <div className={styles['blocks-wrapper']}>
-                    <SearchBlock text='Online' additionalText={'free'} isLoading={isSearching === 0}
-                        clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
-                </div>
-                : ''
-            }
+            ? <div className={styles['blocks-wrapper']}>
+                <SearchBlock text='Online' additionalText={'free'} isLoading={isSearching === 0}
+                    clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
+            </div>
+            : ''
+
 
             <div className={styles['blocks-wrapper']}>
                 <SearchBlock text='Online' additionalText={100} isLoading={isSearching === 0}
-                    clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
+                    clickCallback={() => handleSearch(100)} disabled={isSearching !== null} />
             </div>
             <div className={styles['blocks-wrapper']}>
                 <SearchBlock text='Online' additionalText={500} isLoading={isSearching === 0}
-                    clickCallback={() => handleSearch(0)} disabled={isSearching !== null} />
+                    clickCallback={() => handleSearch(500)} disabled={isSearching !== null} />
             </div>
 
         </div>

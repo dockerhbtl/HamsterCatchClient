@@ -9,13 +9,19 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorCodes } from "./consts/AppConsts";
 import { WrongPlatform } from "./components/SetUsername/WrongPlatform";
-import { HamsterKiller } from "./components/HamsterKiller/HamsterKiller";
+import { useParams } from "react-router-dom";
 
 
 function App() {
+
+    const hash = window.location.hash;
+    const arr = hash.split('-');
+    console.log('arr', arr[0].slice(1));
+
+
     //@ts-ignore
     // const initData = window.Telegram?.WebApp?.initData;
-    const initData = 'query_id=AAEnfFZLAAAAACd8Vks-nq3p&user=%7B%22id%22%3A1263959079%2C%22first_name%22%3A%22%D0%9C%D0%B0%D1%82%D0%B2%D0%B5%D0%B9%22%2C%22last_name%22%3A%22%D0%91%D0%B0%D1%83%D0%BA%D0%BE%D0%B2%22%2C%22username%22%3A%22driveChatt%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1721853756&hash=ae93da661f5e8632f8c51f757a90e996ac92176e6fa1408d861c50cd2630e007';
+    const initData = `query_id=AAEnfFZLAAAAACd8Vks-nq3p&user=%7B%22id%22%3A${arr[0].slice(1)}%2C%22first_name%22%3A%22%D0%9C%D0%B0%D1%82%D0%B2%D0%B5%D0%B9%22%2C%22last_name%22%3A%22%D0%91%D0%B0%D1%83%D0%BA%D0%BE%D0%B2%22%2C%22username%22%3A%22${arr[1]}%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1721853756&hash=ae93da661f5e8632f8c51f757a90e996ac92176e6fa1408d861c50cd2630e007`;
     //
     //@ts-ignore
     //const platform = window.Telegram?.WebApp?.platform;
