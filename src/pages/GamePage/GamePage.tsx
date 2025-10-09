@@ -67,6 +67,10 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
         } else {
             looserEffect()
         }
+        //    socket.send(JSON.stringify({
+        //         method: AppConsts.END_GAME,
+        //         id: data.gameId,
+        //     }))
 
     }
 
@@ -122,14 +126,6 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
 
 
     const sendMessageToServer = (reaction: number) => {
-        console.log('send', {
-            name: id,
-            method: AppConsts.PROCESS,
-            tap: 1,
-            id: gameData.gameId,
-            reactionTime: reaction
-        });
-
         socket.send(JSON.stringify({
             name: id,
             method: AppConsts.PROCESS,
