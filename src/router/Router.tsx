@@ -58,7 +58,6 @@ export const Router = () => {
         };
         createdSocket.onmessage = function (event: { data: string }) {
             const data = JSON.parse(event.data);
-            console.log('data', data);
 
             switch (data.status) {
                 case AppConsts.FINDING:
@@ -130,17 +129,25 @@ export const Router = () => {
             element: <GamePage socket={socket} />,
         },
         {
-            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + "/result" : '/result',
-            element: <ResultPage />,
+            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + "/game-results" : '/game-results',
+            element: <div>Страница результата игры</div>,
         },
         {
-            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/up-balance' : '/up-balance',
-            element: <UpBalancePage />
+            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/my-profile' : '/my-profile',
+            element: <div>Страница профиля</div>,
         },
         {
-            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw',
-            element: <WithdrawPage />
+            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + "/rating" : '/rating',
+            element: <div>Страница рейтинга</div>,
         },
+        // {
+        //     path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/up-balance' : '/up-balance',
+        //     element: <UpBalancePage />
+        // },
+        // {
+        //     path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw',
+        //     element: <WithdrawPage />
+        // },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/help' : '/help',
             element: <FeedbackForm text={'Сообщите нам о проблеме и мы обязательно с вами свяжемся'} withGoBack={true} />

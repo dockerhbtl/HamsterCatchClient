@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppConsts, MAIN_PAGE_ROUTE } from "../../consts/AppConsts";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import styles from './GamePage.module.css';
@@ -11,23 +11,30 @@ import timerImage from '../../assets/images/timer.png';
 import hitSound from '../../assets/sounds/yes1.wav';
 //@ts-ignore
 import errorSound from '../../assets/sounds/error-sound.mp3';
+//@ts-ignore
+import winnerSound from '../../assets/sounds/winner-sound.mp3';
+//@ts-ignore
+import looserSound from '../../assets/sounds/looser-sound.mp3';
+import { AfterGame } from "../../components/BeforeGame/AfterGame";
 
 
 export const GamePage = ({ socket }: { socket: WebSocket }) => {
 
     const dispatch = useAppDispatch();
 
-    const navigate = useNavigate();
 
     const [hamsterAppearTime, setHamsterAppearTime] = useState(0);
 
-    const [showHammer, setShowHammer] = useState(false);
+
     const [results, setResults] = useState<number[]>([]);
     const [clickedId, setClickedId] = useState(-1);
     const [backStyle, setBackStyle] = useState('');
+    const [showResult, setShowResult] = useState(false);
+    const [isWinner, setIsWinner] = useState(false);
 
     const id = useAppSelector(state => state.authSlice.id);
     const gameData = useAppSelector(state => state.gameSlice.gameData);
+
 
     useEffect(() => {
         if (gameData.position !== -1) {
@@ -35,11 +42,43 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
         }
     }, [gameData.position]);
 
+    const winnerEffect = () => {
+        const audio = new Audio(winnerSound);
+        audio.volume = 0.5;
+        audio.play();
+        setShowResult(true);
+        setIsWinner(true)
+    }
+
+    const looserEffect = () => {
+        const audio = new Audio(looserSound);
+        audio.volume = 0.5;
+        audio.play();
+        setShowResult(true)
+    }
+
+    const handleEndGame = (winnerId: string) => {
+        if (showResult) {
+            return;
+
+        }
+        if (Number(winnerId) === Number(id)) {
+            winnerEffect()
+        } else {
+            looserEffect()
+        }
+
+    }
+
+    useEffect(() => {
+        gameData.playersData.map(player => {
+            if (player.moleCount === 10) {
+                handleEndGame(player.id);
+            }
+        })
+    }, [gameData.playersData])
+
     const defineSuccessTapper = (tappedId: number) => {
-        console.log('tappedID', tappedId);
-        console.log('id', id);
-
-
         const audio = new Audio(errorSound);
         if (tappedId === Number(id)) {
             setBackStyle('linear-gradient(135deg, #d0c5c5 0%, #ace8a0 100%)')
@@ -61,11 +100,6 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
     }, [gameData.tappedId])
 
 
-
-    const calculateSum = () => {
-        return results.reduce((acc, curr) => acc + curr, 0);
-    }
-
     const handleHitHamster = (id: number) => {
         let reaction = 0;
         if (hamsterAppearTime !== 0) {
@@ -76,22 +110,15 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
         const audio = new Audio(hitSound);
         audio.volume = 0.5;
         audio.play();
-        setShowHammer(true);
         setClickedId(id);
         sendMessageToServer(reaction);
         dispatch(disbleMole())
-        //  generateHamster(delay);
         setTimeout(() => {
-            setShowHammer(false);
             audio.pause();
         }, 500)
     }
 
 
-
-
-
-    // const [isDisbledGame, setDisabledGame] = useState(true);
 
 
     const sendMessageToServer = (reaction: number) => {
@@ -133,34 +160,35 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
     // }
 
 
-    console.log('gameData', gameData);
 
-
-    return <div className={styles.background} style={backStyle ? { background: backStyle } : {}}>
-        <div>
-            <GameTimerNew />
-        </div>
-        <div className={styles['results-wrapper']}>
-            <div className={styles.results}>
-                <div className={styles.username}>{gameData.playersData[0].username}</div>
-                <div><img src={timerImage} alt="timer" />{gameData.playersData[0].fullReactionTime} ms</div>
-                <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{gameData.playersData[0].moleCount}/10</div>
+    return <>
+        {showResult && <AfterGame isWinner={isWinner} />}
+        <div className={styles.background} style={backStyle ? { background: backStyle } : {}}>
+            <div>
+                <GameTimerNew />
             </div>
-            <div className={styles.results}>
-                <div className={styles.username}>{gameData.playersData[1].username}</div>
-                <div><img src={timerImage} alt="timer" />{gameData.playersData[1].fullReactionTime} ms</div>
-                <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{gameData.playersData[1].moleCount}/10</div>
+            <div className={styles['results-wrapper']}>
+                <div className={styles.results}>
+                    <div className={styles.username}>{gameData.playersData[0].username}</div>
+                    <div><img src={timerImage} alt="timer" />{gameData.playersData[0].fullReactionTime} ms</div>
+                    <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{gameData.playersData[0].moleCount}/10</div>
+                </div>
+                <div className={styles.results}>
+                    <div className={styles.username}>{gameData.playersData[1].username}</div>
+                    <div><img src={timerImage} alt="timer" />{gameData.playersData[1].fullReactionTime} ms</div>
+                    <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{gameData.playersData[1].moleCount}/10</div>
+                </div>
+            </div>
+            <div className={styles['game-field']}>
+                {Array.from({ length: 12 }).map((_, i) => <div className={styles.hole} key={i}>
+                    {clickedId === i && <div className={styles.reaction}>+{results[results.length - 1]} ms</div>}
+                    {gameData.position === i &&
+                        <div className={styles.mole}>
+                            <img className={styles.hamster} src={hamsterImage} alt='hamster' onClick={() => handleHitHamster(i)} />
+                        </div>
+                    }
+                </div>)}
             </div>
         </div>
-        <div className={styles['game-field']}>
-            {Array.from({ length: 12 }).map((_, i) => <div className={styles.hole} key={i}>
-                {clickedId === i && <div className={styles.reaction}>+{results[results.length - 1]} ms</div>}
-                {gameData.position === i &&
-                    <div className={styles.mole}>
-                        <img className={styles.hamster} src={hamsterImage} alt='hamster' onClick={() => handleHitHamster(i)} />
-                    </div>
-                }
-            </div>)}
-        </div>
-    </div>
+    </>
 }

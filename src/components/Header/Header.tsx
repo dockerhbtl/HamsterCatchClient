@@ -15,7 +15,7 @@ export const Header = () => {
         {
             key: '1',
             label: (
-                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw'} >
+                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/my-profile' : '/my-profile'} >
                     Мой профиль
                 </Link>
             ),
@@ -23,7 +23,7 @@ export const Header = () => {
         {
             key: '2',
             label: (
-                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw'} >
+                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/rating' : '/rating'} >
                     Таблица рейтинга
                 </Link>
             ),

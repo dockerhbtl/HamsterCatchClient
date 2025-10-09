@@ -18,6 +18,35 @@
     animation: fadeIn 3s forwards;
 }
 
+.after {
+  width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100000;
+    animation: fadeOutHalf 2s forwards;
+    display: flex;
+    justify-content: center;
+}
+.confirm-btn button {
+    width: 250px;
+    height: 50px;
+    border: none;
+    border-radius: 16px;
+    background: #8BAD1C;
+    font-size: 16px;
+    color: #fff;
+    margin-top: 24px;
+}
+.result-text {
+  color: #fff;
+  margin-top: 200px;
+}
+.result-text h1 {
+  text-align: center;
+}
+
 @keyframes fadeIn {
   from {
     background-color: rgba(0, 0, 0, 1);
@@ -34,6 +63,15 @@
   }
   to {
     background-color: rgba(0, 0, 0, 1);
+  }
+}
+
+@keyframes fadeOutHalf {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
