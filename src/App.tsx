@@ -16,7 +16,6 @@ function App() {
 
     const hash = window.location.hash;
     const arr = hash.split('-');
-    console.log('arr', arr[0].slice(1));
 
 
     //@ts-ignore

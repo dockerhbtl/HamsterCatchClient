@@ -18,7 +18,6 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
     const { id, username } = useAppSelector(state => state.authSlice);
     const gameData = useAppSelector(state => state.gameSlice.gameData);
 
-    console.log('isSearching', isSearching);
 
 
     function raisePrioirity(gameId: any) {
@@ -44,7 +43,7 @@ export const SearchGameBlocks = ({ socket }: { socket: WebSocket }) => {
     useEffect(() => {
 
         if (gameData.isPlayersReady) {
-            // navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/game' : '/game')
+            navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/game' : '/game')
         }
 
     }, [gameData.isPlayersReady]

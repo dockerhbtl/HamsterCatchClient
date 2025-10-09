@@ -37,7 +37,6 @@ export const ConfirmGameModal = ({ handleCancelGame, gameData, handleReadyToPlay
         };
     }, [count]);
 
-    console.log('gameData.playersData', gameData.playersData);
 
 
     return <Modal open={true} className={styles['modal-wrapper']} onCancel={handleCancelGame}

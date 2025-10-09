@@ -7,11 +7,16 @@ export interface GameState {
         isGameCreated: boolean;
         gameId: string;
         isPlayersReady: boolean;
+        position: number;
+        tappedId: string;
         playersData: {
-            name: string;
+            gameId: string;
+            id: string;
+            moleCount: number;
+            username: string;
             sumToPlay: number;
-            tap: number;
             ready: number;
+            fullReactionTime: number;
         }[]
     };
     gameResult: {
@@ -30,8 +35,10 @@ const initialState: GameState = {
     isGameStarted: false,
     gameData: {
         isGameCreated: false,
+        position: 0,
         gameId: '',
         isPlayersReady: false,
+        tappedId: '',
         playersData: []
     },
     gameResult: {
@@ -56,6 +63,18 @@ export const gameSlice = createSlice({
                 state.gameData = action.payload;
             }
         },
+        setTappedId: (state, action) => {
+            if (state.isGameStarted) {
+                state.gameData.tappedId = action.payload.tappedId;
+                state.gameData.playersData = action.payload.players;
+                state.gameData.position = -1;
+            }
+        },
+        disbleMole: (state) => {
+            if (state.isGameStarted) {
+                state.gameData.position = -1;
+            }
+        },
         setGameProcess: (state, action) => {
             if (state.isGameStarted) {
                 state.gameData = action.payload
@@ -69,6 +88,8 @@ export const gameSlice = createSlice({
             state.isGameStarted = false;
             state.gameData = {
                 isGameCreated: false,
+                position: 0,
+                tappedId: '',
                 gameId: '',
                 isPlayersReady: false,
                 playersData: []
@@ -97,7 +118,9 @@ export const {
     resetGameDataToInitialValues,
     setGameId,
     setGameResults,
-    setNewGameResult
+    setNewGameResult,
+    setTappedId,
+    disbleMole
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

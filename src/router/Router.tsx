@@ -10,7 +10,8 @@ import {
     setGameId,
     setGameProcess,
     setGameResults,
-    setIsGameCreated
+    setIsGameCreated,
+    setTappedId
 } from "../store/reducers/GameSlice";
 import { GamePage } from "../pages/GamePage/GamePage";
 import { ResultPage } from "../pages/ResultPage/ResultPage";
@@ -52,7 +53,9 @@ export const Router = () => {
                 window.location.reload();
             };
             socket.onmessage = function (event: { data: string }) {
-                const data = JSON.parse(event.data)
+                const data = JSON.parse(event.data);
+                console.log('data', data);
+
                 switch (data.status) {
                     case AppConsts.FINDING:
                         dispatch(setGameId(data.gameId))
@@ -68,14 +71,12 @@ export const Router = () => {
                         break;
                     case AppConsts.PLAYERS_READY:
                         if (data.tappedId) {
-                            dispatch(setGameProcess({
-                                reactionTime: data.reactionTime,
-                            }))
+                            dispatch(setTappedId(data))
                         } else {
                             dispatch(setGameProcess({
                                 gameId: data.gameId,
                                 playersData: data.players,
-                                position: 1,
+                                position: data.position,
                                 isPlayersReady: true
                             }))
                         }
