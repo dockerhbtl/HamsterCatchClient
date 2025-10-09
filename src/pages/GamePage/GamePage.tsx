@@ -70,7 +70,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
         let reaction = 0;
         if (hamsterAppearTime !== 0) {
             const clickTime = performance.now();
-            reaction = clickTime - hamsterAppearTime;
+            reaction = Math.ceil(clickTime - hamsterAppearTime);
             setResults([...results, reaction]);
         }
         const audio = new Audio(hitSound);
@@ -148,7 +148,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
             </div>
             <div className={styles.results}>
                 <div className={styles.username}>{gameData.playersData[1].username}</div>
-                <div><img src={timerImage} alt="timer" />{gameData.playersData[0].fullReactionTime} ms</div>
+                <div><img src={timerImage} alt="timer" />{gameData.playersData[1].fullReactionTime} ms</div>
                 <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{gameData.playersData[1].moleCount}/10</div>
             </div>
         </div>
