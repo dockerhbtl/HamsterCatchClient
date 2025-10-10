@@ -7,6 +7,7 @@ import { Loader } from "../components/Loader/Loader";
 import { AppConsts, MAIN_PAGE_ROUTE } from "../consts/AppConsts";
 import {
     resetGameDataToInitialValues,
+    setDisconnected,
     setGameId,
     setGameProcess,
     setGameResults,
@@ -59,6 +60,7 @@ export const Router = () => {
         createdSocket.onmessage = function (event: { data: string }) {
             const data = JSON.parse(event.data);
 
+
             switch (data.status) {
                 case AppConsts.FINDING:
                     dispatch(setGameId(data.gameId))
@@ -83,7 +85,10 @@ export const Router = () => {
                             isPlayersReady: true
                         }))
                     }
-                    break
+                    break;
+                case AppConsts.GAME_LEAVE:
+                    dispatch(setDisconnected())
+                    break;
                 case AppConsts.GAME_CANCEL:
                     dispatch(resetGameDataToInitialValues())
                     break;

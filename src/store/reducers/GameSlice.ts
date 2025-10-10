@@ -19,6 +19,7 @@ export interface GameState {
             fullReactionTime: number;
         }[]
     };
+    isEnemyDisconect: boolean,
     gameResult: {
         winner: string;
         results: {
@@ -41,6 +42,7 @@ const initialState: GameState = {
         tappedId: '',
         playersData: []
     },
+    isEnemyDisconect: false,
     gameResult: {
         winner: '',
         results: {}
@@ -107,6 +109,9 @@ export const gameSlice = createSlice({
         },
         setNewGameResult: (state, action) => {
             state.newGameResult.taps = action.payload
+        },
+        setDisconnected: (state) => {
+            state.isEnemyDisconect = true;
         }
     }
 });
@@ -120,7 +125,8 @@ export const {
     setGameResults,
     setNewGameResult,
     setTappedId,
-    disbleMole
+    disbleMole,
+    setDisconnected
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

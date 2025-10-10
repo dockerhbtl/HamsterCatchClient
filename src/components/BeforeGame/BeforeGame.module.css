@@ -46,6 +46,9 @@
 .result-text h1 {
   text-align: center;
 }
+.additional-text {
+  text-align: center;
+}
 
 @keyframes fadeIn {
   from {

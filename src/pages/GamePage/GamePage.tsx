@@ -34,6 +34,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
 
     const id = useAppSelector(state => state.authSlice.id);
     const gameData = useAppSelector(state => state.gameSlice.gameData);
+    const isEnemyDisconnect = useAppSelector(state => state.gameSlice.isEnemyDisconect);
 
 
     useEffect(() => {
@@ -41,6 +42,12 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
             setHamsterAppearTime(performance.now());
         }
     }, [gameData.position]);
+
+    useEffect(() => {
+        if (isEnemyDisconnect) {
+            winnerEffect()
+        }
+    }, [isEnemyDisconnect])
 
     const winnerEffect = () => {
         const audio = new Audio(winnerSound);
@@ -75,7 +82,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
     }
 
     useEffect(() => {
-        gameData.playersData.map(player => {
+        gameData.playersData.map((player: any) => {
             if (player.moleCount === 10) {
                 handleEndGame(player.id);
             }
@@ -158,7 +165,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
 
 
     return <>
-        {showResult && <AfterGame isWinner={isWinner} />}
+        {showResult && <AfterGame isWinner={isWinner} text={isEnemyDisconnect ? 'Противник покинул игру' : ''} />}
         <div className={styles.background} style={backStyle ? { background: backStyle } : {}}>
             <div>
                 <GameTimerNew />
