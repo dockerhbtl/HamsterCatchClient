@@ -1,6 +1,7 @@
 import styles from './MainPage.module.css';
 import { Header } from "../../components/Header/Header";
 import logo from '../../assets/images/game-logo.png';
+import logo2 from '../../assets/images/logo-new-2.jpg';
 //import hamsterLogo from '../../assets/images/green_winner.png';
 import { SearchGameBlocks } from "../../components/SearchGameBlocks/SearchGameBlocks";
 import { MessageOutlined } from '@ant-design/icons';

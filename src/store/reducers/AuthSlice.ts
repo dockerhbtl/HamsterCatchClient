@@ -8,13 +8,55 @@ export interface AuthState {
     username: string;
     balance: number;
     rating: number;
+    statistic: {
+        all_mole: string;
+        best_game_time: number;
+        best_reaction: string;
+        full_time: string;
+        game_count: string,
+        game_lost: string;
+        game_win: string;
+        id: number;
+        user_id: string;
+        winrate: string;
+        worst_reaction: string;
+    };
+    games: {
+        count: number;
+        games: {
+            game: {
+                winner: string;
+                sum: number;
+            };
+            createdAt: string;
+            time: string;
+            mole_count: number;
+        }[]
+    }
 }
 
 const initialState: AuthState = {
     id: 0,
     username: '',
     balance: 0,
-    rating: 0
+    rating: 0,
+    statistic: {
+        all_mole: '',
+        best_game_time: 0,
+        best_reaction: '',
+        full_time: '',
+        game_count: '',
+        game_lost: '',
+        game_win: '',
+        id: 0,
+        user_id: '',
+        winrate: '',
+        worst_reaction: ''
+    },
+    games: {
+        count: 0,
+        games: []
+    }
 };
 
 export const authSlice = createSlice({
@@ -27,10 +69,20 @@ export const authSlice = createSlice({
             state.balance = action.payload.balance;
             state.rating = action.payload.rating;
         },
+        setStatistic: (state, action) => {
+            state.rating = action.payload.rating;
+            state.balance = action.payload.balance;
+            state.statistic = action.payload.userStatistics;
+        },
+        setGames: (state, action) => {
+            state.games.count = action.payload.count;
+            state.games.games = [...state.games.games, ...action.payload.rows];
+        }
+
     }
 });
 
-export const { setAuthData } = authSlice.actions;
+export const { setAuthData, setStatistic, setGames } = authSlice.actions;
 
 export default authSlice.reducer;
 
@@ -46,6 +98,38 @@ export function getMyUsername() {
             }));
         } catch (e) {
             toast.error('Ошибка авторизации', {
+                style: {
+                    marginTop: '16px'
+                },
+                autoClose: 2000
+            })
+        }
+    };
+}
+
+export function getMyStatistic() {
+    return async (dispatch: AppDispatch) => {
+        try {
+            const response = await authApi.getMyStatistic();
+            dispatch(setStatistic(response.data));
+        } catch (e) {
+            toast.error('Ошибка получения данных', {
+                style: {
+                    marginTop: '16px'
+                },
+                autoClose: 2000
+            })
+        }
+    };
+}
+
+export function getMyGames(page: number) {
+    return async (dispatch: AppDispatch) => {
+        try {
+            const response = await authApi.getMyGames(page);
+            dispatch(setGames(response.data));
+        } catch (e) {
+            toast.error('Ошибка получения данных', {
                 style: {
                     marginTop: '16px'
                 },

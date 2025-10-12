@@ -24,7 +24,61 @@ export const TraningResultPage = () => {
 
     return <div className={styles['main-wrapper']}>
         <GoBack text="Результаты" />
-        <div className={styles['full-time']}>
+        <div className={styles['blocks-main-wrapper']}>
+            <div className={styles.title}>Реакция</div>
+            <div className={styles['blocks-wrapper']}>
+                <div className={styles['single-block']}>
+                    <span>Лучшая</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{Math.min(...taps)}</div>
+                        <img src={defaineImageByTime(Number(Math.min(...taps)))} alt='animal' />
+                    </div>
+                </div>
+                <div className={styles['single-block']}>
+                    <span>Средняя</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{calculateAverage()}</div>
+                        <img src={defaineImageByTime(calculateAverage())} alt='animal' />
+                    </div>
+                </div>
+                <div className={styles['single-block']}>
+                    <span>Худшая</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{Math.max(...taps)}</div>
+                        <img src={defaineImageByTime(Math.max(...taps))} alt='animal' />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div className={styles['blocks-main-wrapper']} style={{ marginTop: '30px' }}>
+            <div className={styles.title}>Кроты</div>
+            <div className={styles['blocks-wrapper']}>
+                {taps.map((tap, i) => <div key={i} className={styles['single-block']}>
+                    <span>{i + 1}</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{tap}</div>
+                        <img src={hamsterIcon} alt='animal' />
+                    </div>
+                </div>)}
+                <div className={styles['single-block']} style={{ width: '100%' }}>
+                    <span>Общее время игры</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{sum}ms</div>
+                        <img src={defaineImageByFullTime(sum, 10)} alt='animal' />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div className={styles['confirm-btn']}>
+            <button onClick={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/' : '/')}>На главную <HomeOutlined /></button>
+        </div>
+    </div>
+}
+
+/*
+ <div className={styles['full-time']}>
             <div>Общее время поимки</div>
             <div>{sum} ms <img src={defaineImageByFullTime(sum, taps.length)} alt="animal" /></div>
         </div>
@@ -47,8 +101,4 @@ export const TraningResultPage = () => {
                 <img src={hamsterIcon} alt='mole' />
                 {tap} ms</div>)}
         </div>
-        <div className={styles['confirm-btn']}>
-            <button onClick={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/' : '/')}>На главную <HomeOutlined /></button>
-        </div>
-    </div>
-}
+*/

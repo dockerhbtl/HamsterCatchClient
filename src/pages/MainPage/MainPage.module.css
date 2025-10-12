@@ -1,5 +1,5 @@
 .main-wrapper {
-    background: #1B1C20;
+    background: radial-gradient(circle, #364164 40%, #35364f 70%, #1B1C20 100%);
     min-height: 100vh;
     padding: 16px;
     padding-bottom: 100px;

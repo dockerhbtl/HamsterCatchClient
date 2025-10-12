@@ -42,6 +42,12 @@ export const authApi = {
     getMyData: () => {
         return axiosInstance.get('/users/auth/me');
     },
+    getMyStatistic: () => {
+        return axiosInstance.get('/statistic/get-my-statistic')
+    },
+    getMyGames: (page: number) => {
+        return axiosInstance.get('/statistic/get-my-games?page=' + page)
+    },
     getOwnOperations: () => {
         return axiosInstance.get('/users/get-own-operations')
     },

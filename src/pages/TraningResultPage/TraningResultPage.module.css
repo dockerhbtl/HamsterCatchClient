@@ -1,62 +1,49 @@
 .main-wrapper {
-    background: #1B1C20;
+    background: radial-gradient(circle, #364164 40%, #35364f 70%, #1B1C20 100%);
     min-height: 100vh;
     padding: 16px;
     padding-bottom: 100px;
     color: #fff;
 }
-.records-wrapper {
-    margin-top: 50px;
-    display: flex;
-    font-size: 14px;
-    justify-content: space-between;
+.blocks-main-wrapper {
+  margin-top: 90px;
 }
-.single-result {
-    width: 33%;
-}
-.single-result img {
-    width: 25px;
-    height: 25px;
-}
-.single-result div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.single-mole {
-    width: 33%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
+.title {
+  font-size: 17px;
 }
 
-.single-mole img {
-    width: 25px;
-    height: 25px;
+.blocks-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.mole-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 50px;
+.single-block {
+  background-color: #212631;
+  height: 75px;
+  width: 32%;
+  text-align: center;
+  padding-top: 5px;
+  margin-top: 6px;
 }
-
-.full-time {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
+.single-block span {
+  color: #bdb7b7;
+  margin-top: 5px;
 }
-
-.full-time div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.single-block div {
+  font-size: 27px;
+  color:#fff;
+  margin-top: 4px;
 }
-
-.full-time img {
-    width: 35px;
-    height: 35px;
+.time-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.time-wrapper img {
+  width: 20px;
+  height: 20px;
+  margin-top: 10px;
+  margin-left: 4px;
 }
 
 .confirm-btn button {

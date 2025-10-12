@@ -46,7 +46,7 @@ export const HamsterKillerTraning = () => {
     const handleHitHamster = (id: number) => {
         if (hamsterAppearTime !== 0) {
             const clickTime = performance.now();
-            const reaction = clickTime - hamsterAppearTime;
+            const reaction = Math.ceil(clickTime - hamsterAppearTime);
             setResults([...results, reaction]);
         }
         const audio = new Audio(hitSound);

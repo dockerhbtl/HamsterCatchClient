@@ -62,7 +62,69 @@ export const GameResultPage = () => {
 
     return <div className={styles['main-wrapper']}>
         <GoBack text="Результаты" hideIcon={true} />
-        <div className={styles['full-time']}>
+        <div className={styles['blocks-main-wrapper']}>
+            <div className={styles.title}>Реакция</div>
+            <div className={styles['blocks-wrapper']}>
+                <div className={styles['single-block']}>
+                    <span>Лучшая</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{myData.reactions.length > 0 ? Math.min(...myData.reactions) : '-'}</div>
+                        <img src={myData.reactions.length > 0 ? defaineImageByTime(Number(Math.min(...myData.reactions))) : defaineImageByTime(15000)} alt='animal' />
+                    </div>
+                </div>
+                <div className={styles['single-block']}>
+                    <span>Средняя</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{myData.reactions.length > 0 ? calculateAverage() : '-'}</div>
+                        <img src={myData.reactions.length > 0 ? defaineImageByTime(calculateAverage()) : defaineImageByTime(15000)} alt='animal' />
+                    </div>
+                </div>
+                <div className={styles['single-block']}>
+                    <span>Худшая</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{myData.reactions.length > 0 ? Math.max(...myData.reactions) : '-'}</div>
+                        <img src={myData.reactions.length > 0 ? defaineImageByTime(Math.max(...myData.reactions)) : defaineImageByTime(15000)} alt='animal' />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div className={styles['blocks-main-wrapper']} style={{ marginTop: '30px' }}>
+            <div className={styles.title}>Кроты</div>
+            <div className={styles['blocks-wrapper']}>
+                {myData.reactions.map((tap, i) => <div key={i} className={styles['single-block']}>
+                    <span>{i + 1}</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{tap}</div>
+                        <img src={hamsterIcon} alt='animal' />
+                    </div>
+                </div>)}
+                <div className={styles['single-block']} style={{ width: '100%' }}>
+                    <span>Общее время игры</span>
+                    <div className={styles['time-wrapper']}>
+                        <div>{myData.reactions.length > 0 ? sum : '-'}ms</div>
+                        <img src={myData.reactions.length > 0 ? defaineImageByFullTime(sum, myData.reactions.length) : defaineImageByFullTime(0, 0)} alt='animal' />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div className={styles['confirm-btn']}>
+            <button disabled={isLoading} onClick={handleGoHome}> {isLoading ? <TailSpin
+                height="18"
+                width="18"
+                color="#fff"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+            /> : <>На главную <HomeOutlined /></>}</button>
+        </div>
+    </div>
+}
+
+/* <div className={styles['full-time']}>
             {myData.reactions.length > 0 && <>
                 <div>Общее время поимки</div>
                 <div>{sum} ms <img src={defaineImageByFullTime(sum, myData.reactions.length)} alt="animal" /></div></>}
@@ -97,17 +159,5 @@ export const GameResultPage = () => {
                 <img src={hamsterIcon} alt='mole' />
                 {tap} ms</div>)}
         </div>
-        <div className={styles['confirm-btn']}>
-            <button disabled={isLoading} onClick={handleGoHome}> {isLoading ? <TailSpin
-                height="18"
-                width="18"
-                color="#fff"
-                ariaLabel="tail-spin-loading"
-                radius="1"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-            /> : <>На главную <HomeOutlined /></>}</button>
-        </div>
-    </div>
-}
+
+*/

@@ -1,5 +1,5 @@
 .main-wrapper {
-    background: rgba(27, 28, 32, 1);
+    background: radial-gradient(circle, #364164 40%, #35364f 70%, #1B1C20 100%);
     width: 100%;
     height: 100vh;
     padding: 16px;
