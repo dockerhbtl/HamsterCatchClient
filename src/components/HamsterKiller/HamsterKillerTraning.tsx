@@ -33,7 +33,9 @@ export const HamsterKillerTraning = () => {
 
     const generateHamster = async (ms: number) => {
         await delay(ms);
-        setHamsterId(Math.floor(Math.random() * 12));
+        //Math.floor(Math.random() * 12)
+        setHamsterId(2);
+        setClickedId(-1);
         setHamsterAppearTime(performance.now());
     }
 
@@ -65,7 +67,6 @@ export const HamsterKillerTraning = () => {
     const calculateSum = () => {
         return results.reduce((acc, curr) => acc + curr, 0);
     }
-
 
 
     return <>

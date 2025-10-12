@@ -22,9 +22,19 @@ export interface GameState {
     isEnemyDisconect: boolean,
     gameResult: {
         winner: string;
-        results: {
-            [key: string]: number
-        }
+        gameId: string;
+        players: {
+            id: string;
+            gameId: string;
+            fullReactionTime: number;
+            moleCount: number;
+            reactions: number[];
+            reactionData: {
+                bestReaction: number;
+                fullReactionTime: number;
+                worstReaction: number;
+            }
+        }[]
     };
     traningResult: {
         taps: number[]
@@ -45,7 +55,8 @@ const initialState: GameState = {
     isEnemyDisconect: false,
     gameResult: {
         winner: '',
-        results: {}
+        gameId: '',
+        players: []
     },
     traningResult: {
         taps: []
@@ -98,14 +109,7 @@ export const gameSlice = createSlice({
             }
         },
         setGameResults: (state, action) => {
-            const taps: any = {};
-            action.payload.players.forEach((player: any) => {
-                taps[player.telegram] = player.tap;
-            });
-            state.gameResult = {
-                winner: action.payload.winner,
-                results: taps
-            }
+            state.gameResult = action.payload;
         },
         setTraningResult: (state, action) => {
             state.traningResult.taps = action.payload

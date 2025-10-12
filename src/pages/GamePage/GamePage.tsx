@@ -39,6 +39,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
 
     useEffect(() => {
         if (gameData.position !== -1) {
+            setClickedId(-1);
             setHamsterAppearTime(performance.now());
         }
     }, [gameData.position]);
@@ -74,10 +75,10 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
         } else {
             looserEffect()
         }
-        //    socket.send(JSON.stringify({
-        //         method: AppConsts.END_GAME,
-        //         id: data.gameId,
-        //     }))
+        socket.send(JSON.stringify({
+            method: AppConsts.END_GAME,
+            id: gameData.gameId,
+        }))
 
     }
 

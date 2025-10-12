@@ -15,7 +15,6 @@ import {
     setTappedId
 } from "../store/reducers/GameSlice";
 import { GamePage } from "../pages/GamePage/GamePage";
-import { ResultPage } from "../pages/ResultPage/ResultPage";
 import { UpBalancePage } from "../pages/UpBalancePage/UpBalancePage";
 import { WithdrawPage } from "../pages/WithdtawPage/WithdrawPage";
 import { FeedbackForm } from "../components/FeedbackForm/FeedbackForm";
@@ -61,7 +60,7 @@ export const Router = () => {
         };
         createdSocket.onmessage = function (event: { data: string }) {
             const data = JSON.parse(event.data);
-            // console.log('data', data);
+            console.log('data', data);
 
             switch (data.status) {
                 case AppConsts.FINDING:
