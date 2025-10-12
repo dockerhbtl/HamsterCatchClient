@@ -6,6 +6,7 @@ import { MAIN_PAGE_ROUTE } from "../../consts/AppConsts";
 import { useAppSelector } from "../../hooks/redux";
 import { authApi } from "../../api/api";
 import { toast } from "react-toastify";
+import { GoBack } from '../GoBack/GoBack';
 
 export const FeedbackForm = ({ text, withGoBack }: { text: string, withGoBack: boolean }) => {
 
@@ -22,6 +23,7 @@ export const FeedbackForm = ({ text, withGoBack }: { text: string, withGoBack: b
     }
     const navigate = useNavigate()
     return <div className={styles['main-wrapper']}>
+        <GoBack text='Помощь' />
         {withGoBack
             ? <div className={styles['go-back']}>
                 <div className={styles['go-back-wrapp']} onClick={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE : '/')}>

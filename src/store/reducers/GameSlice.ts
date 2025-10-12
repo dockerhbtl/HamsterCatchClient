@@ -26,7 +26,7 @@ export interface GameState {
             [key: string]: number
         }
     };
-    newGameResult: {
+    traningResult: {
         taps: number[]
     }
 }
@@ -47,7 +47,7 @@ const initialState: GameState = {
         winner: '',
         results: {}
     },
-    newGameResult: {
+    traningResult: {
         taps: []
     }
 };
@@ -107,8 +107,8 @@ export const gameSlice = createSlice({
                 results: taps
             }
         },
-        setNewGameResult: (state, action) => {
-            state.newGameResult.taps = action.payload
+        setTraningResult: (state, action) => {
+            state.traningResult.taps = action.payload
         },
         setDisconnected: (state) => {
             state.isEnemyDisconect = true;
@@ -123,7 +123,7 @@ export const {
     resetGameDataToInitialValues,
     setGameId,
     setGameResults,
-    setNewGameResult,
+    setTraningResult,
     setTappedId,
     disbleMole,
     setDisconnected

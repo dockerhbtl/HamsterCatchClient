@@ -22,6 +22,8 @@ import { FeedbackForm } from "../components/FeedbackForm/FeedbackForm";
 import { toast } from "react-toastify";
 import { HamsterKillerTraning } from "../components/HamsterKiller/HamsterKillerTraning";
 import { TraningResultPage } from "../pages/TraningResultPage/TraningResultPage";
+import { GameResultPage } from "../pages/TraningResultPage/GameResultPage";
+import { MyProfile } from "../pages/MyProfile/MyProfile";
 
 
 export const Router = () => {
@@ -51,15 +53,15 @@ export const Router = () => {
             }))
         };
         createdSocket.onclose = function () {
-            window.location.reload();
+            // window.location.reload();
         };
         createdSocket.onerror = function (error: any) {
             console.error('Ошибка веб-сокета:', error);
-            window.location.reload();
+            //  window.location.reload();
         };
         createdSocket.onmessage = function (event: { data: string }) {
             const data = JSON.parse(event.data);
-
+            // console.log('data', data);
 
             switch (data.status) {
                 case AppConsts.FINDING:
@@ -87,13 +89,19 @@ export const Router = () => {
                     }
                     break;
                 case AppConsts.GAME_LEAVE:
-                    dispatch(setDisconnected())
+                    dispatch(setDisconnected());
+                    createdSocket.close();
+                    setSocket(null);
                     break;
                 case AppConsts.GAME_CANCEL:
-                    dispatch(resetGameDataToInitialValues())
+                    dispatch(resetGameDataToInitialValues());
+                    createdSocket.close();
+                    setSocket(null);
                     break;
                 case AppConsts.END_GAME:
-                    dispatch(setGameResults(data))
+                    dispatch(setGameResults(data));
+                    createdSocket.close();
+                    setSocket(null);
                     break;
                 case AppConsts.BALANCE_IS_NOT_ENOUGH:
                     toast.error(data.message, {
@@ -102,11 +110,15 @@ export const Router = () => {
                         },
                         autoClose: 2000
                     })
-                    dispatch(resetGameDataToInitialValues())
+                    dispatch(resetGameDataToInitialValues());
+                    createdSocket.close();
+                    setSocket(null);
                     break;
                 case AppConsts.SERVER_IS_OVERLOADED:
                     dispatch(resetGameDataToInitialValues())
-                    toast.error('Сервер перегружен попробуйте позже')
+                    toast.error('Сервер перегружен попробуйте позже');
+                    createdSocket.close();
+                    setSocket(null);
                     break;
                 default:
                     break;
@@ -135,11 +147,11 @@ export const Router = () => {
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + "/game-results" : '/game-results',
-            element: <div>Страница результата игры</div>,
+            element: <GameResultPage />,
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/my-profile' : '/my-profile',
-            element: <div>Страница профиля</div>,
+            element: <MyProfile />,
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + "/rating" : '/rating',

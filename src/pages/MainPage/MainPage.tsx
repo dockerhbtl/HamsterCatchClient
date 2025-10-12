@@ -11,7 +11,6 @@ import { AppPreloader } from '../../components/BeforeGame/AppPreloader';
 export const MainPage = ({ socket, createSocketAndStartSearch }: { socket: WebSocket, createSocketAndStartSearch: (id: string, sum: number) => void }) => {
     const navigate = useNavigate();
 
-
     return <div className={styles['main-wrapper']}>
         <AppPreloader />
         <Header />

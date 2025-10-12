@@ -6,8 +6,9 @@ import { GameTimerNew } from '../GameTimer/GameTimerNew';
 //@ts-ignore
 import hitSound from '../../assets/sounds/yes1.wav';
 import { useAppDispatch } from '../../hooks/redux';
-import { setNewGameResult } from '../../store/reducers/GameSlice';
+import { setTraningResult } from '../../store/reducers/GameSlice';
 import { useNavigate } from 'react-router-dom';
+import { AfterTraning } from '../BeforeGame/AfterTraning';
 
 export const HamsterKillerTraning = () => {
     const [showHammer, setShowHammer] = useState(false);
@@ -16,14 +17,15 @@ export const HamsterKillerTraning = () => {
     const [hamsterAppearTime, setHamsterAppearTime] = useState(0);
     const [results, setResults] = useState<number[]>([]);
     const [clickedId, setClickedId] = useState(-1);
+    const [endTraning, setEndTraning] = useState(false);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (scores === 10) {
-            dispatch(setNewGameResult(results))
-            navigate('/traning-result');
+            dispatch(setTraningResult(results))
+            setEndTraning(true)
         }
     }, [scores])
 
@@ -66,25 +68,28 @@ export const HamsterKillerTraning = () => {
 
 
 
-    return <div className={styles.background} style={showHammer ? { background: 'linear-gradient(135deg, #d0c5c5 0%, #ace8a0 100%)' } : {}}>
-        <div>
-            <GameTimerNew />
+    return <>
+        {endTraning && <AfterTraning />}
+        <div className={styles.background} style={showHammer ? { background: 'linear-gradient(135deg, #d0c5c5 0%, #ace8a0 100%)' } : {}}>
+            <div>
+                <GameTimerNew />
+            </div>
+            <div className={styles.results}>
+                <div><img src={timerImage} alt="timer" />{calculateSum()} ms</div>
+                <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{scores}/10</div>
+            </div>
+            <div className={styles['game-field']}>
+                {Array.from({ length: 12 }).map((_, i) => <div className={styles.hole} key={i}>
+                    {clickedId === i && <div className={styles.reaction}>+{results[results.length - 1]} ms</div>}
+                    {hamsterId === i &&
+                        <div className={styles.mole}>
+                            <img className={styles.hamster} src={hamsterImage} alt='hamster' onClick={() => handleHitHamster(i)} />
+                        </div>
+                    }
+                </div>)}
+            </div>
         </div>
-        <div className={styles.results}>
-            <div><img src={timerImage} alt="timer" />{calculateSum()} ms</div>
-            <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{scores}/10</div>
-        </div>
-        <div className={styles['game-field']}>
-            {Array.from({ length: 12 }).map((_, i) => <div className={styles.hole} key={i}>
-                {clickedId === i && <div className={styles.reaction}>+{results[results.length - 1]} ms</div>}
-                {hamsterId === i &&
-                    <div className={styles.mole}>
-                        <img className={styles.hamster} src={hamsterImage} alt='hamster' onClick={() => handleHitHamster(i)} />
-                    </div>
-                }
-            </div>)}
-        </div>
-    </div>
+    </>
 }
 
 /*

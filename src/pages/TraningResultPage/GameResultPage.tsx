@@ -7,10 +7,10 @@ import { defaineImageByFullTime, defaineImageByTime } from "../../functions/func
 import { MAIN_PAGE_ROUTE } from "../../consts/AppConsts";
 import { HomeOutlined } from "@ant-design/icons";
 
-export const TraningResultPage = () => {
+export const GameResultPage = () => {
     const navigate = useNavigate();
 
-    const taps = useAppSelector(state => state.gameSlice.traningResult.taps);
+    const taps = [450, 500, 600, 790, 554];
 
     const sum = taps.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 

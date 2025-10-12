@@ -48,8 +48,9 @@ export const SearchGameBlocks = ({ socket, createSocketAndStartSearch }: { socke
             // navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/game' : '/game')
         }
 
-    }, [gameData.isPlayersReady]
-    )
+    }, [gameData.isPlayersReady]);
+
+
 
 
     const handleSearch = (sum: number) => {

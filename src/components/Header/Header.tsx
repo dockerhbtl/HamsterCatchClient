@@ -1,53 +1,33 @@
 import { useAppSelector } from "../../hooks/redux";
 import styles from './Header.module.css';
-import { Dropdown } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import ava from '../../assets/images/avatar.png';
-import money from '../../assets/images/money.png';
+import { useNavigate } from "react-router-dom";
+import ava from '../../assets/images/hamster-game.png';
+import ratingImg from '../../assets/images/rating.png';
 import moneyNew from '../../assets/images/moneyNew.png';
-import dropdown from '../../assets/images/dropdown.png'
 import { MAIN_PAGE_ROUTE } from "../../consts/AppConsts";
 
 export const Header = () => {
     const navigate = useNavigate();
-    const { balance, username } = useAppSelector(state => state.authSlice);
-    const items = [
-        {
-            key: '1',
-            label: (
-                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/my-profile' : '/my-profile'} >
-                    Мой профиль
-                </Link>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <Link to={MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/rating' : '/rating'} >
-                    Таблица рейтинга
-                </Link>
-            ),
-        }
-    ];
+    const { balance, username, rating } = useAppSelector(state => state.authSlice);
+
+
+    const handleNavigate = (route: string) => {
+        navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + route : route)
+    }
 
 
     return <div className={styles['header-wrapper']}>
-        <div className={styles['name']}>
+        <div className={styles['name']} onClick={() => handleNavigate('/my-profile')}>
             <img src={ava} alt="Ava" />
             <div>{username.length > 10 ? username.substr(0, 8) + '...' : username}</div>
         </div>
-        <Dropdown menu={{ items }} placement="bottom" arrow trigger={['click']}>
-            <div className={styles['balance-wrapper']}>
-                {String(balance).length <= 5 ?
-                    ''//<img src={money} alt="money" />
-                    : <div></div>
-                }
+        <div className={styles['balance-wrapper']} onClick={() => handleNavigate('/rating')}>
+            <div>
                 <div className={styles.balanceNew}>{balance} <img src={moneyNew} alt="money" /></div>
-                <img src={dropdown} alt="dropdown" />
             </div>
-        </Dropdown>
-        {/*<div className={styles['up-balance']}>*/}
-        {/*    <button onClick={() => navigate(MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/up-balance' : '/up-balance')}>Пополнить</button>*/}
-        {/*</div>*/}
+            <div className={styles.rating}>
+                {rating}<img src={ratingImg} alt="rating" />
+            </div>
+        </div>
     </div>
 }

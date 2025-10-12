@@ -15,7 +15,7 @@
     left: 0;
     top: 0;
     z-index: 100000;
-    animation: fadeIn 3s forwards;
+    animation: fadeIn 1s forwards;
 }
 
 .after {

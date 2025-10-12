@@ -7,7 +7,7 @@ export const AppPreloader = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoaded(true);
-        }, 3000)
+        }, 1000)
     }, [])
     return <>
         {loaded

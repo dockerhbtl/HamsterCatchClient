@@ -1,0 +1,77 @@
+.main-wrapper {
+    background: #1B1C20;
+    min-height: 100vh;
+    padding: 16px;
+    padding-bottom: 100px;
+    color: #fff;
+}
+.records-wrapper {
+    margin-top: 50px;
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+}
+.single-result {
+    width: 33%;
+}
+.single-result img {
+    width: 25px;
+    height: 25px;
+}
+.single-result div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.single-mole {
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+.single-mole img {
+    width: 25px;
+    height: 25px;
+}
+
+.mole-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.full-time {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.full-time div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.full-time img {
+    width: 35px;
+    height: 35px;
+}
+
+.confirm-btn button {
+    width: 250px;
+    height: 50px;
+    border: none;
+    border-radius: 16px;
+    background: #8BAD1C;
+    font-size: 16px;
+    color: #fff;
+    margin-top: 24px;
+}
+
+.confirm-btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
