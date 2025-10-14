@@ -8,6 +8,7 @@ export interface AuthState {
     username: string;
     balance: number;
     rating: number;
+    rank: string;
     statistic: {
         all_mole: string;
         best_game_time: number;
@@ -40,6 +41,7 @@ const initialState: AuthState = {
     username: '',
     balance: 0,
     rating: 0,
+    rank: '',
     statistic: {
         all_mole: '',
         best_game_time: 0,
@@ -70,11 +72,16 @@ export const authSlice = createSlice({
             state.rating = action.payload.rating;
         },
         setStatistic: (state, action) => {
+            state.rank = action.payload.rank;
             state.rating = action.payload.rating;
             state.balance = action.payload.balance;
             state.statistic = action.payload.userStatistics;
         },
         setGames: (state, action) => {
+            state.games.count = action.payload.count;
+            state.games.games = action.payload.rows;
+        },
+        pushGames: (state, action) => {
             state.games.count = action.payload.count;
             state.games.games = [...state.games.games, ...action.payload.rows];
         }
@@ -82,7 +89,7 @@ export const authSlice = createSlice({
     }
 });
 
-export const { setAuthData, setStatistic, setGames } = authSlice.actions;
+export const { setAuthData, setStatistic, setGames, pushGames } = authSlice.actions;
 
 export default authSlice.reducer;
 
@@ -127,7 +134,11 @@ export function getMyGames(page: number) {
     return async (dispatch: AppDispatch) => {
         try {
             const response = await authApi.getMyGames(page);
-            dispatch(setGames(response.data));
+            if (page === 1) {
+                dispatch(setGames(response.data));
+            } else {
+                dispatch(pushGames(response.data));
+            }
         } catch (e) {
             toast.error('Ошибка получения данных', {
                 style: {

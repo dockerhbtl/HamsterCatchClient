@@ -149,5 +149,5 @@
 }
 .crown img {
     margin-bottom: -35px;
-    z-index: 10;
+    z-index: 100000;
 }

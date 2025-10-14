@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter, createHashRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MainPage } from "../pages/MainPage/MainPage";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { useEffect, useState } from "react";
@@ -15,14 +15,14 @@ import {
     setTappedId
 } from "../store/reducers/GameSlice";
 import { GamePage } from "../pages/GamePage/GamePage";
-import { UpBalancePage } from "../pages/UpBalancePage/UpBalancePage";
-import { WithdrawPage } from "../pages/WithdtawPage/WithdrawPage";
 import { FeedbackForm } from "../components/FeedbackForm/FeedbackForm";
 import { toast } from "react-toastify";
 import { HamsterKillerTraning } from "../components/HamsterKiller/HamsterKillerTraning";
 import { TraningResultPage } from "../pages/TraningResultPage/TraningResultPage";
 import { GameResultPage } from "../pages/TraningResultPage/GameResultPage";
 import { MyProfile } from "../pages/MyProfile/MyProfile";
+import { RatingPage } from "../pages/RatingPage/RatingPage";
+import { UserPage } from "../pages/UserPage/UserPage";
 
 
 export const Router = () => {
@@ -154,19 +154,15 @@ export const Router = () => {
         },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + "/rating" : '/rating',
-            element: <div>Страница рейтинга</div>,
+            element: <RatingPage />,
         },
-        // {
-        //     path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/up-balance' : '/up-balance',
-        //     element: <UpBalancePage />
-        // },
-        // {
-        //     path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/withdraw' : '/withdraw',
-        //     element: <WithdrawPage />
-        // },
         {
             path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/help' : '/help',
             element: <FeedbackForm text={'Сообщите нам о проблеме и мы обязательно с вами свяжемся'} withGoBack={true} />
+        },
+        {
+            path: MAIN_PAGE_ROUTE ? MAIN_PAGE_ROUTE + '/user/:userId' : '/user/:userId',
+            element: <UserPage />,
         }
     ]);
     return (appLoaded) ? <div>

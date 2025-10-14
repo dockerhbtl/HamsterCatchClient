@@ -49,3 +49,21 @@ export const defaineImageByFullTime = (time: number, count: number) => {
         return turtleIcon;
     }
 }
+
+export function defineAvatarByRank(rank: number) {
+    if (rank === 1) {
+        return cheetahIcon;
+    } else if (rank === 2) {
+        return catIcon;
+    } else if (rank === 3) {
+        return elephantIcon;
+    } else if (rank > 3 && rank <= 10) {
+        return koalaIcon;
+    } else if (rank > 10 && rank <= 20) {
+        return slothIcon;
+    } else if (rank > 20) {
+        return turtleIcon;
+    } else {
+        return turtleIcon;
+    }
+}

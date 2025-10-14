@@ -1,0 +1,44 @@
+.main-wrapper {
+    /* background: #1B1C20; */
+    background: radial-gradient(circle, #364164 40%, #35364f 70%, #1B1C20 100%);
+    min-height: 100vh;
+    padding: 16px;
+    padding-bottom: 100px;
+    color: #fff;
+}
+
+.table-wrapper {
+    margin-top: 50px;
+}
+
+.title-wrapper {
+    display: flex;
+    font-size: 14px;
+    padding: 5px;
+}
+.title-wrapper div {
+    width: 33%;
+}
+.title-wrapper div:nth-child(3) {
+    text-align: end;
+}
+.row-wrapper {
+    display: flex;
+    font-size: 14px;
+    padding: 5px;
+}
+.row-wrapper div {
+    width: 33%;
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+
+.row-wrapper div:nth-child(3) {
+    justify-content: end;
+}
+
+.more-wrapper {
+    text-align: center;
+    margin-top: 8px;
+}

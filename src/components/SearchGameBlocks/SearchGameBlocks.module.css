@@ -34,3 +34,20 @@
     color: #fff;
     border-radius: 8px;
 }
+
+.nav-wrappper {
+    display: flex;
+    justify-content: space-between;
+}
+.nav-wrappper div {
+    height: 70px;
+    background-color: #2C2C2C;
+    width: 49%;
+    border-radius: 8px;
+    color:#fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 16px;
+}

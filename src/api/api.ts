@@ -45,8 +45,17 @@ export const authApi = {
     getMyStatistic: () => {
         return axiosInstance.get('/statistic/get-my-statistic')
     },
+    getUserStatistic: (id: number) => {
+        return axiosInstance.get('/statistic/get-user-statistic?id=' + id)
+    },
+    getTopRating: (page: number) => {
+        return axiosInstance.get('/statistic/get-top-rating?limit=1&page=' + page);
+    },
     getMyGames: (page: number) => {
         return axiosInstance.get('/statistic/get-my-games?page=' + page)
+    },
+    getUserGames: (page: number, id: number) => {
+        return axiosInstance.get(`/statistic/get-user-games?page=${page}&id=${id}`)
     },
     getOwnOperations: () => {
         return axiosInstance.get('/users/get-own-operations')

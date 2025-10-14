@@ -1,38 +1,36 @@
-import { GoBack } from '../../components/GoBack/GoBack';
-import { defaineImageByTime, defineAvatarByRank } from '../../functions/functions';
-import styles from './MyProfile.module.css';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import styles from './UserPage.module.css';
+import { Loader } from "../../components/Loader/Loader";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { getUserGames, getUserStatistic } from "../../store/reducers/RatingSlice";
+import { GoBackWithRoute } from "../../components/GoBack/GoBackWithRoute";
 import mole from '../../assets/images/hamster-game.png';
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { getMyGames, getMyStatistic } from '../../store/reducers/AuthSlice';
-import { Loader } from '../../components/Loader/Loader';
-import moneyIcon from '../../assets/images/moneyNew.png';
 import ratingIcon from '../../assets/images/rating.png';
-import { format } from 'date-fns';
+import { defaineImageByTime, defineAvatarByRank } from "../../functions/functions";
+import { format } from "date-fns";
 import crown from '../../assets/images/crown.png';
 
-export const MyProfile = () => {
-    const [appLoaded, setAppLoaded] = useState(false);
+export const UserPage = () => {
+    const { userId } = useParams();
+    const dispatch = useAppDispatch();
+    const [userLoaded, setUserLoaded] = useState(false);
     const [page, setPage] = useState(1);
 
-    const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getMyStatistic()).then(() => setAppLoaded(true));
+        dispatch(getUserStatistic(Number(userId))).then(() => setUserLoaded(true));
     }, []);
 
     useEffect(() => {
-        dispatch(getMyGames(page));
+        dispatch(getUserGames(page, Number(userId)));
     }, [page])
 
-    const { rating, balance, statistic, games, rank } = useAppSelector(state => state.authSlice);
-    const { id } = useAppSelector(state => state.authSlice);
-
-
+    const { statistic, games, rank, rating, id } = useAppSelector(state => state.ratingSlice.user);
 
     return <div className={styles['main-wrapper']}>
-        <GoBack text='Мой профиль' />
-        {appLoaded
+        {userLoaded
             ? <div>
+                <GoBackWithRoute text="Username here" route="/rating" />
                 <div className={styles['avatar-wrapper']}>
                     <div className={styles['rank']}>#{rank} в рейтинге</div>
                     {Number(rank) === 1 &&
@@ -41,11 +39,10 @@ export const MyProfile = () => {
                         </div>
                     }
                     <div className={styles.ava}>
-                        <img src={defineAvatarByRank(Number(rank))} alt="" />
+                        <img src={defineAvatarByRank(Number(rank))} alt="ava" />
                     </div>
                     <div className={styles['ava-data-wrapper']}>
                         <div>{rating} <img src={ratingIcon} alt="" /> </div>
-                        <div>{balance} <img src={moneyIcon} alt="" /></div>
                     </div>
                 </div>
                 <div className={styles['blocks-main-wrapper']}>
@@ -138,9 +135,9 @@ export const MyProfile = () => {
                         </div>
                     }
                 </div>
+
             </div>
             : <Loader />
-
         }
     </div>
 }

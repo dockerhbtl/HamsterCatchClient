@@ -30,7 +30,7 @@ export const SearchGameBlocks = ({ socket, createSocketAndStartSearch }: { socke
 
     useEffect(() => {
         let timeout: any;
-        const raiseTimer = (Math.floor(Math.random() * 25) + 15) * 1000;
+        const raiseTimer = 2000;// (Math.floor(Math.random() * 25) + 15) * 1000;
         if (gameData.gameId) {
             timeout = setTimeout(() => {
                 raisePrioirity(gameData.gameId)
@@ -118,6 +118,10 @@ export const SearchGameBlocks = ({ socket, createSocketAndStartSearch }: { socke
 
             }
             <div>
+                <div className={styles['nav-wrappper']}>
+                    <div onClick={() => navigate('/my-profile')}>Мой профиль</div>
+                    <div onClick={() => navigate('/rating')}>Таблица рейтинга</div>
+                </div>
                 <div className={styles['blocks-wrapper']}>
                     <SearchBlock text='Тренировка' isLoading={isSearching === 0}
                         clickCallback={handleStartTraning} disabled={isSearching !== null} />

@@ -4,6 +4,7 @@ import tokenSlice from './reducers/TokenSlice';
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import gameSlice from "./reducers/GameSlice";
+import ratingSlice from "./reducers/RatingSlice";
 
 const persistConfig = {
     key: 'root',
@@ -15,7 +16,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
     authSlice,
     tokenSlice,
-    gameSlice
+    gameSlice,
+    ratingSlice
 });
 
 
