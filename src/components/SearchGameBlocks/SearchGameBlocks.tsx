@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setIsSearching } from '../../store/reducers/GameSlice';
+import { resetGameDataToInitialValues, setIsSearching } from '../../store/reducers/GameSlice';
 import { SearchBlock } from './SearchBlock';
 import styles from './SearchGameBlocks.module.css';
 import { AppConsts, GAME_TIME, MAIN_PAGE_ROUTE } from '../../consts/AppConsts';
@@ -30,7 +30,7 @@ export const SearchGameBlocks = ({ socket, createSocketAndStartSearch }: { socke
 
     useEffect(() => {
         let timeout: any;
-        const raiseTimer = 2000;// (Math.floor(Math.random() * 25) + 15) * 1000;
+        const raiseTimer = (Math.floor(Math.random() * 25) + 15) * 1000;
         if (gameData.gameId) {
             timeout = setTimeout(() => {
                 raisePrioirity(gameData.gameId)
@@ -81,7 +81,7 @@ export const SearchGameBlocks = ({ socket, createSocketAndStartSearch }: { socke
             method: AppConsts.GAME_CANCEL,
             id: gameData.gameId
         }))
-
+        dispatch(resetGameDataToInitialValues())
     }
 
     const [showTraningEffect, setShowTranningEffect] = useState(false);

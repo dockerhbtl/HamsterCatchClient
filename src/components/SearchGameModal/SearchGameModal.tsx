@@ -1,18 +1,22 @@
-import {Modal} from "antd";
+import { Modal } from "antd";
 import styles from './SearchGameModal.module.css';
-import {ColorRing} from "react-loader-spinner";
-import {useAppSelector} from "../../hooks/redux";
+import { ColorRing } from "react-loader-spinner";
+import { useAppSelector } from "../../hooks/redux";
 import money from '../../assets/images/money.png';
 import yellowHamster from '../../assets/images/yellow_hamster.png';
 import shadowHamster from '../../assets/images/shadow_hamster.png';
 
-export const SearchGameModal = ({handleStopSearching}: { handleStopSearching: () => void }) => {
+
+
+
+export const SearchGameModal = ({ handleStopSearching }: { handleStopSearching: () => void }) => {
     const username = useAppSelector(state => state.authSlice.username);
     const isSearching = useAppSelector(state => state.gameSlice.isSearching);
 
+
     return <Modal open={true} className={styles['modal-wrapper']} onCancel={handleStopSearching}
-                  footer={[]}
-                  width={'90%'}>
+        footer={[]}
+        width={'90%'}>
         <div className={styles['content-wrapper']}>
             <div className={styles['search-info-wrapper']}>
                 <div>Среднее время поиска игры 45-80 секунд</div>
@@ -38,7 +42,7 @@ export const SearchGameModal = ({handleStopSearching}: { handleStopSearching: ()
             </div>
             <div className={styles['game-nominal-wrapper']}>
                 <div className={styles['game-nominal']}>
-                    <img src={money} alt="Coin"/>
+                    <img src={money} alt="Coin" />
                     <div>
                         {isSearching === 0
                             ? 'Бесплатная игра'
@@ -48,8 +52,8 @@ export const SearchGameModal = ({handleStopSearching}: { handleStopSearching: ()
                 </div>
             </div>
             <div className={styles['hamsters-wrapper']}>
-                <img src={yellowHamster} alt="Hamster"/>
-                <img src={shadowHamster} alt="Hamster"/>
+                <img src={yellowHamster} alt="Hamster" />
+                <img src={shadowHamster} alt="Hamster" />
             </div>
             <div className={styles['cancel-game-wrapper']}>
                 <button onClick={handleStopSearching}>Отменить поиск</button>

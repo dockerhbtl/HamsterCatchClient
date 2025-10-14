@@ -60,7 +60,7 @@ export const Router = () => {
         };
         createdSocket.onmessage = function (event: { data: string }) {
             const data = JSON.parse(event.data);
-            console.log('data', data);
+            //console.log('data', data);
 
             switch (data.status) {
                 case AppConsts.FINDING:
