@@ -75,7 +75,7 @@ export const authSlice = createSlice({
             state.rank = action.payload.rank;
             state.rating = action.payload.rating;
             state.balance = action.payload.balance;
-            state.statistic = action.payload.userStatistics;
+            state.statistic = action.payload.userStatistic;
         },
         setGames: (state, action) => {
             state.games.count = action.payload.count;

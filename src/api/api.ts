@@ -49,7 +49,7 @@ export const authApi = {
         return axiosInstance.get('/statistic/get-user-statistic?id=' + id)
     },
     getTopRating: (page: number) => {
-        return axiosInstance.get('/statistic/get-top-rating?limit=1&page=' + page);
+        return axiosInstance.get('/statistic/get-top-rating?&page=' + page)
     },
     getMyGames: (page: number) => {
         return axiosInstance.get('/statistic/get-my-games?page=' + page)

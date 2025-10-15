@@ -13,6 +13,7 @@ export interface GameState {
             gameId: string;
             id: string;
             moleCount: number;
+            rating: number;
             username: string;
             sumToPlay: number;
             ready: number;

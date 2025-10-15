@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { AppConsts, MAIN_PAGE_ROUTE } from "../../consts/AppConsts";
+import { useEffect, useState } from "react";
+import { AppConsts } from "../../consts/AppConsts";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import styles from './GamePage.module.css';
-import { useNavigate } from "react-router-dom";
-import { disbleMole, resetGameDataToInitialValues } from "../../store/reducers/GameSlice";
+import { disbleMole } from "../../store/reducers/GameSlice";
 import { GameTimerNew } from "../../components/GameTimer/GameTimerNew";
 import hamsterImage from '../../assets/images/hamster-game.png';
 import timerImage from '../../assets/images/timer.png';
+import ratingImage from '../../assets/images/rating.png';
 //@ts-ignore
 import hitSound from '../../assets/sounds/yes1.wav';
 //@ts-ignore
@@ -165,6 +165,7 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
 
 
 
+
     return <>
         {showResult && <AfterGame isWinner={isWinner} text={isEnemyDisconnect ? 'Противник покинул игру' : ''} />}
         <div className={styles.background} style={backStyle ? { background: backStyle } : {}}>
@@ -174,11 +175,19 @@ export const GamePage = ({ socket }: { socket: WebSocket }) => {
             <div className={styles['results-wrapper']}>
                 <div className={styles.results}>
                     <div className={styles.username}>{gameData.playersData[0].username}</div>
+                    <div className={styles.rating}>
+                        {gameData.playersData[0].rating}
+                        <img src={ratingImage} alt="rating" />
+                    </div>
                     <div><img src={timerImage} alt="timer" />{gameData.playersData[0].fullReactionTime} ms</div>
                     <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{gameData.playersData[0].moleCount}/10</div>
                 </div>
                 <div className={styles.results}>
                     <div className={styles.username}>{gameData.playersData[1].username}</div>
+                    <div className={styles.rating}>
+                        {gameData.playersData[1].rating}
+                        <img src={ratingImage} alt="rating" />
+                    </div>
                     <div><img src={timerImage} alt="timer" />{gameData.playersData[1].fullReactionTime} ms</div>
                     <div><img className={styles.hamster} src={hamsterImage} alt='hamster' />{gameData.playersData[1].moleCount}/10</div>
                 </div>

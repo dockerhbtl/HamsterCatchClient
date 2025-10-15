@@ -25,12 +25,12 @@ export const UserPage = () => {
         dispatch(getUserGames(page, Number(userId)));
     }, [page])
 
-    const { statistic, games, rank, rating, id } = useAppSelector(state => state.ratingSlice.user);
+    const { statistic, games, rank, rating, id, username } = useAppSelector(state => state.ratingSlice.user);
 
     return <div className={styles['main-wrapper']}>
         {userLoaded
             ? <div>
-                <GoBackWithRoute text="Username here" route="/rating" />
+                <GoBackWithRoute text={username} route="/rating" />
                 <div className={styles['avatar-wrapper']}>
                     <div className={styles['rank']}>#{rank} в рейтинге</div>
                     {Number(rank) === 1 &&

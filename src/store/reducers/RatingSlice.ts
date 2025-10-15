@@ -12,6 +12,7 @@ export interface RatingState {
     user: {
         rating: number;
         rank: string;
+        username: string;
         id: string;
         statistic: {
             all_mole: string;
@@ -51,6 +52,7 @@ const initialState: RatingState = {
         rating: 0,
         rank: '',
         id: '',
+        username: '',
         statistic: {
             all_mole: '',
             best_game_time: 0,
@@ -86,7 +88,8 @@ export const ratingSlice = createSlice({
             state.user.id = action.payload.id;
             state.user.rank = action.payload.rank;
             state.user.rating = action.payload.rating;
-            state.user.statistic = action.payload.userStatistics;
+            state.user.username = action.payload.username;
+            state.user.statistic = action.payload.userStatistic;
         },
         setUserGames: (state, action) => {
             state.user.games.count = action.payload.count;
@@ -107,8 +110,8 @@ export function getTopRating(page: number) {
         try {
             const response = await authApi.getTopRating(page);
             dispatch(setTable({
-                count: 3,
-                rows: response.data
+                count: response.data.count,
+                rows: response.data.rows
             }))
         } catch (e) {
             toast.error('Ошибка получения данных', {

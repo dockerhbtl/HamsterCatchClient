@@ -92,7 +92,13 @@
         .username {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 16px;
+        }
+        .rating {
+          font-size: 14px;
+          margin-bottom: 16px;
+        }
+        .rating img {
+          margin-top: -7px;
         }
 
 
